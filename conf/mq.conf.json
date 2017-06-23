@@ -1,0 +1,38 @@
+{
+    "host": "localhost",
+    "port": "5672",
+    "username": "lihaomin",
+    "password": "lihaomin",
+    "exchanges": [
+        {   
+            "name": "topic_event",
+            "type": "topic"
+        },  
+        {   
+            "name": "topic_notification",
+            "type": "topic"
+        }   
+    ],  
+    "queues": [
+        {   
+            "name": "q_ec2",
+            "exchange": "topic_event",
+            "routing_key": "event.ec2.#"
+        },  
+        {   
+            "name": "q_elb",
+            "exchange": "topic_event",
+            "routing_key": "event.elb.#"
+        },  
+        {   
+            "name": "q_rds",
+            "exchange": "topic_event",
+            "routing_key": "event.rds.#"
+        },  
+        {   
+            "name": "q_notification",
+            "exchange": "topic_notification",
+            "routing_key": "notification.#"
+        }   
+    ]   
+}
