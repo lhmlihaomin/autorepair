@@ -8,6 +8,13 @@ class Region(models.Model):
     name = models.CharField(max_length=100)
     tag_name = models.CharField(max_length=100)
     full_name = models.CharField(max_length=500)
+    profile_name = models.CharField(max_length=500, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def __unicode__(self):
+        return self.__str__()
 
 
 class Module(models.Model):
