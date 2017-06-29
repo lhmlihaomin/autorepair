@@ -5,34 +5,34 @@
     "password": "lihaomin",
     "exchanges": [
         {   
-            "name": "topic_event",
+            "name": "topic_events",
             "type": "topic"
         },  
         {   
-            "name": "topic_notification",
+            "name": "topic_notifications",
             "type": "topic"
         }   
     ],  
     "queues": [
         {   
             "name": "q_ec2",
-            "exchange": "topic_event",
-            "routing_key": "event.ec2.#"
+            "exchange": "topic_events",
+            "routing_key": "events.ec2.#"
         },  
         {   
             "name": "q_elb",
-            "exchange": "topic_event",
-            "routing_key": "event.elb.#"
+            "exchange": "topic_events",
+            "routing_key": "events.elb.#"
         },  
         {   
             "name": "q_rds",
-            "exchange": "topic_event",
-            "routing_key": "event.rds.#"
+            "exchange": "topic_events",
+            "routing_key": "events.rds.#"
         },  
         {   
             "name": "q_notification",
-            "exchange": "topic_notification",
-            "routing_key": "notification.#"
+            "exchange": "topic_notifications",
+            "routing_key": "notifications.#"
         }   
     ]   
 }
