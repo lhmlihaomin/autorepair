@@ -24,38 +24,40 @@ import signal
 import boto3
 import pika
 
-from checks import get_events, print_events
-from asset.models import Region
+from checks import InstanceStatusChecker
+from asset.models import Region, OnlineEvent
 
 # Constants:
 REGION_NAME = 'cn-north-1'
-
-#region = Region.objects.get(name=REGION_NAME)
-#events = get_events(region)
-#print_events(events)
-
+"""
+region = Region.objects.get(name=REGION_NAME)
+events = get_events(region)
+print_events(events)
+exit()
+"""
 
 class Scanner(object):
     """Scans for online events."""
-    def __init__(self, conf_file_path):
+    def __init__(self, mq_conf_file_path):
         """Read configuration and make connections"""
         self.alive = True
         self.conf = None
         self.mq_conn = None
         self.mq_channel = None
-        """try:
-            with open(conf_file_path, 'r') as conffile:
-                self.conf = json.loads(conffile.read())
+        self.conf = {}
+        try:
+            with open(mq_conf_file_path, 'r') as conffile:
+                self.conf['rabbitmq'] = json.loads(conffile.read())
         except Exception as ex:
             print ex
             sys.exit(1)
-        self._init_rabbitmq()"""
+        self._init_rabbitmq()
 
     def _init_rabbitmq(self):
         self.mq_conn = pika.BlockingConnection(
             pika.ConnectionParameters(
                 host=self.conf['rabbitmq']['host'],
-                port=self.conf['rabbitmq']['port'],
+                port=int(self.conf['rabbitmq']['port']),
                 credentials=pika.PlainCredentials(
                     self.conf['rabbitmq']['username'],
                     self.conf['rabbitmq']['password']
@@ -65,17 +67,25 @@ class Scanner(object):
         self.mq_channel = self.mq_conn.channel()
 
     def exit_handler(self, signum, frame):
+        sys.stdout.write("Die now.\n")
         self.alive = False
+
+    def create_event_db(self):
+        pass
+
+    def create_event_mq(self):
+        pass
 
     def main_loop(self):
         while self.alive:
-            print(self.alive)
+            sys.stdout.write(str(self.alive)+"\n")
             # do stuff:
-            print("Doing stuff ...")
-            # wait interval:
+            sys.stdout.write("Doing stuff ...\n")
+            #checker = InstanceStatusChecker(region)
+            # Small sleep interval, faster response to "kill":
             i = 0
             while i < 3:
-                print(i)
+                sys.stdout.write(str(i)+"\n")
                 time.sleep(1)
                 if not self.alive:
                     break
@@ -83,7 +93,13 @@ class Scanner(object):
 
 
 def main():
-    scanner = Scanner("")
+    mq_conf_file = os.path.sep.join((
+        os.path.dirname(__file__), 
+        '..', 
+        'conf',
+        'mq.conf.json'
+    ))
+    scanner = Scanner(mq_conf_file)
     signal.signal(signal.SIGINT, scanner.exit_handler)
     signal.signal(signal.SIGTERM, scanner.exit_handler)
     #signal.signal(signal.CTRL_C_EVENT, scanner.exit_handler)
