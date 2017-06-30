@@ -46,9 +46,24 @@ def init_mq(conf_file_path):
             exchange=exchange['name'],
             type=exchange['type']
         )
+    for queue in conf['queues']:
+        mq_channel.queue_declare(
+            queue=queue['name']
+        )
+        mq_channel.queue_bind(
+            queue=queue['name'],
+            exchange=queue['exchange'],
+            routing_key=queue['routing_key']
+        )
     return (mq_conn, mq_channel)
 
 
 def main():
+    # read conf:
     mq_conf_file = "../conf/mq.conf.json"
     region = Region.objects.get(name=REGION)
+    mq_conn, mq_channel = init_mq(mq_conf_file)
+    mq_conn.close()
+
+if __name__ == "__main__":
+    main()
