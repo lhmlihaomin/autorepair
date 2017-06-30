@@ -8,8 +8,11 @@ Basic functions.
 import os
 import sys
 import django
+current_path = os.path.dirname(__file__)
+if len(current_path) == 0:
+    current_path = "."
 django_path = os.path.abspath(
-    os.path.sep.join((os.path.dirname(__file__), '..', 'web',))
+    os.path.sep.join((current_path, '..', 'web',))
 )
 sys.path.append(django_path)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'web.settings'

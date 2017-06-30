@@ -8,8 +8,11 @@ Demo code.
 import os
 import sys
 import django
+current_path = os.path.dirname(__file__)
+if len(current_path) == 0:
+    current_path = "."
 django_path = os.path.abspath(
-    os.path.sep.join((os.path.dirname(__file__), '..', 'web',))
+    os.path.sep.join((current_path, '..', 'web',))
 )
 sys.path.append(django_path)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'web.settings'
@@ -48,14 +51,23 @@ def init_mq(conf_file_path):
         )
     for queue in conf['queues']:
         mq_channel.queue_declare(
-            queue=queue['name']
+            queue=queue['name'],
+            durable=True
         )
         mq_channel.queue_bind(
             queue=queue['name'],
             exchange=queue['exchange'],
             routing_key=queue['routing_key']
         )
+        mq_channel.basic_consume(
+            event_handler,
+            queue=queue['name']
+        )
     return (mq_conn, mq_channel)
+
+
+def event_handler(channel, method, props, body):
+    print(body)
 
 
 def main():
@@ -63,7 +75,14 @@ def main():
     mq_conf_file = "../conf/mq.conf.json"
     region = Region.objects.get(name=REGION)
     mq_conn, mq_channel = init_mq(mq_conf_file)
-    mq_conn.close()
+    try:
+        print("Start consuming ...")
+        mq_channel.start_consuming()
+    except KeyboardInterrupt:
+        mq_conn.close()
+        print("")
+        print("Bye.")
+
 
 if __name__ == "__main__":
     main()

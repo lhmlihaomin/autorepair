@@ -25,6 +25,12 @@ class Module(models.Model):
     service_type = models.CharField(max_length=500)
     region = models.ForeignKey(Region)
 
+    def __str__(self):
+        return "%s-%s-%s"%(self.name, self.version, self.region.tag_name)
+
+    def __unicode__(str):
+        return unicode(self.__str__())
+
 
 class EC2Instance(models.Model):
     """An EC2 instance"""
