@@ -105,9 +105,13 @@ def main():
     region = Region.objects.get(name=REGION)
 
     mq_conn, mq_channel = init_mq(mq_conf_file)
+    # In this demo, only "instance_status" events are scanned:
     events = get_events(region)
     for event in events:
+        # push events into queue:
         create_event(event, mq_channel)
+        # trigger notification:
+        # create_notification(event, mq_channel)
 
 
 

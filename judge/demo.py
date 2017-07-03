@@ -71,7 +71,6 @@ def event_handler(channel, method, props, body):
     # parse message as JSON string:
     # lookup module info:
     # make decision:
-    # trigger notification:
     # start workers if necessary:
     pass
 
