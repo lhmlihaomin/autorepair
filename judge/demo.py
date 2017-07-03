@@ -67,7 +67,13 @@ def init_mq(conf_file_path):
 
 
 def event_handler(channel, method, props, body):
-    print(body)
+    """Consume events and take actions."""
+    # parse message as JSON string:
+    # lookup module info:
+    # make decision:
+    # trigger notification:
+    # start workers if necessary:
+    pass
 
 
 def main():
