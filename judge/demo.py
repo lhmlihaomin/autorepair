@@ -69,7 +69,13 @@ def init_mq(conf_file_path):
 def event_handler(channel, method, props, body):
     """Consume events and take actions."""
     # parse message as JSON string:
-    # lookup module info:
+    try:
+        event = json.loads(body)
+        # lookup module info:
+        online_event = OnlineEvent.objects.get(pk=event['event_id'])
+    except:
+        # log exception
+        return False
     # make decision:
     # start workers if necessary:
     pass
