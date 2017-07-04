@@ -24,6 +24,38 @@ import pika
 
 ses_client = None
 
+def send_mail(from_address, to_address, subject, body):
+    global ses_client
+    response = client.send_email(
+        Source=from_address,
+        Destination={
+            'ToAddresses': [
+                to_address,
+            ]
+        },
+        Message={
+            'Subject': {
+                'Data': subject,
+                'Charset': 'UTF-8',
+            },
+            'Body': {
+                'Text': {
+                    'Data': body,
+                    'Charset': 'UTF-8',
+                }
+            }
+        },
+    )
+
+
+def send_notification_mail():
+    pass
+
+
+def send_exception_mail():
+    pass
+
+
 def notification_handler(ch, method, props, body):
     print("[NOTIFICATION] "+body)
     return True
@@ -56,18 +88,20 @@ def init_mq(conf_file_path):
     )
     mq_channel = mq_conn.channel()
     # declare exchange:
+    print("Declaring exchange ...")
     mq_channel.exchange_declare(
         exchange="topic_notifications",
         type="topic"
     )
     # declare & bind notification queue:
+    print("Declaring queue notification ...")
     mq_channel.queue_declare(
         queue="q_notification",
         durable=True
     )
     mq_channel.queue_bind(
         queue="q_notification",
-        exchange="topic_notifications,
+        exchange="topic_notifications",
         routing_key="notifications.notification.#"
     )
     mq_channel.basic_consume(
@@ -75,6 +109,7 @@ def init_mq(conf_file_path):
         queue="q_notification"
     )
     # declare & bind exception queue:
+    print("Declaring queue exception ...")
     mq_channel.queue_declare(
         queue="q_exception",
         durable=True
@@ -122,6 +157,7 @@ def main():
     mq_conf_file = "../conf/mq.conf.json"
     try:
         mq_conn, mq_channel = init_mq(mq_conf_file)
+        print("Start consuming ...")
         mq_channel.start_consuming()
     except KeyboardInterrupt:
         print("Bye.")
