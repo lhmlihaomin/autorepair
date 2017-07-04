@@ -50,6 +50,9 @@ def init_mq(conf_file_path):
             type=exchange['type']
         )
     for queue in conf['queues']:
+        # do NOT listen to notification queues:
+        if queue['exchange'] == 'topic_notifications':
+            continue
         mq_channel.queue_declare(
             queue=queue['name'],
             durable=True

@@ -1,8 +1,8 @@
 {
     "host": "localhost",
     "port": "5672",
-    "username": "lihaomin",
-    "password": "lihaomin",
+    "username": "autorepair",
+    "password": "autorepair",
     "exchanges": [
         {   
             "name": "topic_events",
@@ -32,7 +32,12 @@
         {   
             "name": "q_notification",
             "exchange": "topic_notifications",
-            "routing_key": "notifications.#"
-        }   
+            "routing_key": "notifications.notification.#"
+        },
+        {
+            "name": "q_exception",
+            "exchange": "topic_notifications",
+            "routing_key": "notifications.exception.#"
+        }
     ]   
 }
