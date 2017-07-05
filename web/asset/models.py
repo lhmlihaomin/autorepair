@@ -28,7 +28,7 @@ class Module(models.Model):
     def __str__(self):
         return "%s-%s-%s"%(self.name, self.version, self.region.tag_name)
 
-    def __unicode__(str):
+    def __unicode__(self):
         return unicode(self.__str__())
 
 
