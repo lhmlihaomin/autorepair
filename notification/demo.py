@@ -46,6 +46,7 @@ def send_mail(from_address, to_address, subject, body):
             }
         },
     )
+    print response
 
 
 def send_notification_mail():
