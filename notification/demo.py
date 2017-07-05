@@ -22,16 +22,19 @@ import time
 import boto3
 import pika
 
+from_address = None
+to_addresses = None
 ses_client = None
 
-def send_mail(from_address, to_address, subject, body):
+
+def send_mail(subject, body):
     global ses_client
-    response = client.send_email(
+    global from_address
+    global to_addresses
+    response = ses_client.send_email(
         Source=from_address,
         Destination={
-            'ToAddresses': [
-                to_address,
-            ]
+            'ToAddresses': to_addresses
         },
         Message={
             'Subject': {
@@ -46,32 +49,45 @@ def send_mail(from_address, to_address, subject, body):
             }
         },
     )
-    print response
+    return response
 
 
-def send_notification_mail():
-    pass
+def send_notification_mail(event):
+    subject = "[AUTOREPAIR] New Event"
+    body = ""
+    for key in event.keys():
+        body += "%s: \t%s\r\n"%(key, str(event[key]))
+    return send_mail(subject, body)
 
 
-def send_exception_mail():
-    pass
+def send_exception_mail(exception):
+    subject = "[AUTOREPAIR] Exception"
+    body = str(exception)
+    return send_mail(subject, body)
 
 
 def notification_handler(ch, method, props, body):
     print("[NOTIFICATION] "+body)
-    return True
-    try:
-        event = json.loads(body)
-    except:
+    #return True
+    #try:
+    event = json.loads(body)
+    response = send_notification_mail(event)
+    print(response)
+    #except:
         # log exception
-        pass
+    #    pass
     
-
 
 def exception_handler(ch, method, props, body):
     print("[EXCEPTION] "+body)
-    return True
-    pass
+    #return True
+    #try:
+    exception = json.loads(body)
+    response = send_exception_mail(exception)
+    print(response)
+    #except:
+        # log exception
+    #    pass
 
 
 def init_mq(conf_file_path):
@@ -107,7 +123,8 @@ def init_mq(conf_file_path):
     )
     mq_channel.basic_consume(
         notification_handler,
-        queue="q_notification"
+        queue="q_notification",
+        no_ack=True
     )
     # declare & bind exception queue:
     print("Declaring queue exception ...")
@@ -122,41 +139,34 @@ def init_mq(conf_file_path):
     )
     mq_channel.basic_consume(
         exception_handler,
-        queue="q_exception"
+        queue="q_exception",
+        no_ack=True
     )
     return (mq_conn, mq_channel)
 
 
-"""
-session = boto3.Session(profile_name=profile_name, region_name=region_name)
-client = session.client('ses')
+def init_ses(conf_file_path):
+    global from_address
+    global to_addresses
 
-response = client.send_email(
-    Source=FROM_ADDRESS,
-    Destination={
-        'ToAddresses': [
-            TO_ADDRESS,
-        ]
-    },
-    Message={
-        'Subject': {
-            'Data': 'SES Mail Test',
-            'Charset': 'UTF-8',
-        },
-        'Body': {
-            'Text': {
-                'Data': 'Plain text mail body.',
-                'Charset': 'UTF-8',
-            }
-        }
-    },
-)
-"""
+    with open(conf_file_path, 'r') as conffile:
+        conf = json.loads(conffile.read())
+    profile_name = conf['profile_name']
+    region_name = conf['region_name']
+    from_address = conf['from_address']
+    to_addresses = conf['to_addresses']
 
+    session = boto3.Session(profile_name=profile_name, region_name=region_name)
+    ses_client = session.client('ses')
+    return ses_client
+    
 
 def main():
+    global ses_client
     mq_conf_file = "../conf/mq.conf.json"
+    ses_conf_file = "../conf/ses.conf.json"
     try:
+        ses_client = init_ses(ses_conf_file)
         mq_conn, mq_channel = init_mq(mq_conf_file)
         print("Start consuming ...")
         mq_channel.start_consuming()
