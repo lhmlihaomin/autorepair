@@ -73,6 +73,7 @@ class OnlineEvent(models.Model):
     event_state = models.CharField(max_length=100)
     detail = models.TextField()
     result_detail = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 class EventLog(models.Model):
