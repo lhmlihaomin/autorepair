@@ -1,1 +1,5 @@
 TODOs:
+1. Create dummy module(s);
+2. Make event handler table for these modules;
+3. Simulate maintenance events such as "instance-stop";
+4. Add worker module.

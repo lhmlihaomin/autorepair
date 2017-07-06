@@ -48,6 +48,12 @@ class EC2Instance(models.Model):
     private_ip_address = models.CharField(max_length=500)
     key_pair = models.CharField(max_length=500)
 
+    def __str__(self):
+        return self.name
+
+    def __unicode__(self):
+        return unicode(self.__str__())
+
 
 class ELB(models.Model):
     """An Elastic Load Balancer"""
