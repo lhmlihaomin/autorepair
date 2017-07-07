@@ -70,6 +70,7 @@ def get_events(region):
                 'resource_id': status['InstanceId'],
                 'event_type': status['Events'][0]['Code'],
                 'detail': status['Events'][0]['Description'],
+                'region': region.name,
             })
     return events
 
@@ -89,6 +90,7 @@ def create_event(event, channel):
         online_event.detail = event['detail']
         online_event.event_state = ""
         online_event.result_detail = ""
+        online_event.region = Region.objects.get(name=event['region'])
         online_event.save()
         # publish event to MQ:
         event.update({'event_id': online_event.id})

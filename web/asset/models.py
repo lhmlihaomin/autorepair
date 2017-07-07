@@ -80,6 +80,7 @@ class OnlineEvent(models.Model):
     detail = models.TextField()
     result_detail = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    region = models.ForeignKey(Region, default=1)
 
 
 class EventLog(models.Model):

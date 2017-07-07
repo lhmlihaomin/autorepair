@@ -17,7 +17,7 @@ def get_resource_name(resource):
 
 
 def sync_ec2(request):
-    NAME_PATTERN = "prd-([a-zA-Z0-9_]+)-([0-9._]+)-([a-z0-9]+)-([a-z]{1})-([0-9]+)"
+    NAME_PATTERN = "[adeprtuv]+-([a-zA-Z0-9_]+)-([0-9._]+)-([a-z0-9]+)-([a-z]{1})-([0-9]+)"
     #               ENV  MODULE_NAME     VERSION    REGION      AZ         NUM
     output = ""
     # get regions
