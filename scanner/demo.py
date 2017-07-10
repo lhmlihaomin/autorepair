@@ -83,6 +83,7 @@ def get_events(region):
 def create_event(event, channel):
     try:
         # test if event already exists:
+        # TODO: check only "unassigned" events
         OnlineEvent.objects.get(resource_id=event['resource_id'], event_type=event['event_type'])
         print("Event already exists.")
     except:
