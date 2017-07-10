@@ -26,6 +26,7 @@ import boto3
 import pika
 
 from asset.models import Region, OnlineEvent
+from notification.core import queue_notification
 
 REGION = 'cn-north-1'
 
@@ -99,6 +100,8 @@ def create_event(event, channel):
             routing_key="events.ec2."+event['event_type'],
             body=json.dumps(event)
         )
+        # send notification:
+        queue_notification(channel, event)
 
 
 
@@ -112,9 +115,6 @@ def main():
     for event in events:
         # push events into queue:
         create_event(event, mq_channel)
-        # trigger notification:
-        # create_notification(event, mq_channel)
-
 
 
 if __name__ == "__main__":

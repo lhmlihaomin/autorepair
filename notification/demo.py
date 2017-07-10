@@ -22,48 +22,11 @@ import time
 import boto3
 import pika
 
+from .core import send_mail, send_notification_mail, send_exception_mail
+
 from_address = None
 to_addresses = None
 ses_client = None
-
-
-def send_mail(subject, body):
-    global ses_client
-    global from_address
-    global to_addresses
-    response = ses_client.send_email(
-        Source=from_address,
-        Destination={
-            'ToAddresses': to_addresses
-        },
-        Message={
-            'Subject': {
-                'Data': subject,
-                'Charset': 'UTF-8',
-            },
-            'Body': {
-                'Text': {
-                    'Data': body,
-                    'Charset': 'UTF-8',
-                }
-            }
-        },
-    )
-    return response
-
-
-def send_notification_mail(event):
-    subject = "[AUTOREPAIR] New Event"
-    body = ""
-    for key in event.keys():
-        body += "%s: \t%s\r\n"%(key, str(event[key]))
-    return send_mail(subject, body)
-
-
-def send_exception_mail(exception):
-    subject = "[AUTOREPAIR] Exception"
-    body = str(exception)
-    return send_mail(subject, body)
 
 
 def notification_handler(ch, method, props, body):

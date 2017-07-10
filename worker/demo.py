@@ -89,8 +89,11 @@ def main():
         online_event.resource_id,
         region.name
     ))
-    restart(region, online_event.resource_id)
+    result = restart(region, online_event.resource_id)
     # write back result:
+    online_event.event_state = str(result[0])
+    online_event.result_detail = result[1]
+    online_event.save()
 
 
 if __name__ == "__main__":
