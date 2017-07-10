@@ -22,7 +22,7 @@ import time
 import boto3
 import pika
 
-from .core import send_mail, send_notification_mail, send_exception_mail
+from core import send_mail, send_notification_mail, send_exception_mail
 
 from_address = None
 to_addresses = None
@@ -30,11 +30,14 @@ ses_client = None
 
 
 def notification_handler(ch, method, props, body):
+    global ses_client
+    global from_address
+    global to_addresses
     print("[NOTIFICATION] "+body)
     #return True
     #try:
     event = json.loads(body)
-    response = send_notification_mail(event)
+    response = send_notification_mail(ses_client, from_address, to_addresses, event)
     print(response)
     #except:
         # log exception
@@ -42,11 +45,14 @@ def notification_handler(ch, method, props, body):
     
 
 def exception_handler(ch, method, props, body):
+    global ses_client
+    global from_address
+    global to_addresses
     print("[EXCEPTION] "+body)
     #return True
     #try:
     exception = json.loads(body)
-    response = send_exception_mail(exception)
+    response = send_exception_mail(ses_client, from_address, to_addresses, exception)
     print(response)
     #except:
         # log exception

@@ -25,6 +25,11 @@ import time
 import boto3
 import pika
 
+# add project dir to PYTHONPATH:
+sys.path.append(
+    os.path.abspath("..")
+)
+
 from asset.models import Region, OnlineEvent
 
 REGION = 'cn-north-1'

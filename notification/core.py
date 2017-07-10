@@ -1,3 +1,5 @@
+import json
+
 def queue_notification(channel, event):
     """Push a notification to MQ for sending."""
     exchange_name = "topic_notifications"
@@ -17,11 +19,8 @@ def queue_exception(channel, exception):
     pass
 
 
-def send_mail(subject, body):
+def send_mail(ses_client, from_address, to_addresses, subject, body):
     """Send an email with SES API."""
-    global ses_client
-    global from_address
-    global to_addresses
     response = ses_client.send_email(
         Source=from_address,
         Destination={
@@ -43,16 +42,16 @@ def send_mail(subject, body):
     return response
 
 
-def send_notification_mail(event):
+def send_notification_mail(ses_client, from_address, to_addresses, event):
     """Prepare the args for notification emails."""
     subject = "[AUTOREPAIR] New Event"
     body = ""
     for key in event.keys():
         body += "%s: \t%s\r\n"%(key, str(event[key]))
-    return send_mail(subject, body)
+    return send_mail(ses_client, from_address, to_addresses, subject, body)
 
 
-def send_exception_mail(exception):
+def send_exception_mail(ses_client, from_address, to_addresses, exception):
     subject = "[AUTOREPAIR] Exception"
     body = str(exception)
-    return send_mail(subject, body)
+    return send_mail(ses_client, from_address, to_addresses, subject, body)

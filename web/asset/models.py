@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+import datetime
+
 from django.db import models
 
 # Create your models here.
@@ -81,6 +83,21 @@ class OnlineEvent(models.Model):
     result_detail = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     region = models.ForeignKey(Region, default=1)
+
+    def to_dict(self):
+        return {
+            'source': sel.source,
+            'resource_type': self.resource_type,
+            'event_type': self.event_type,
+            'resource_id': self.resource_id,
+            'event_state': self.event_state,
+            'detail': self.detail,
+            'result_detail': self.result_detail,
+            'create_at': datetime.datetime.strftime(
+                self.created_at, "%Y-%m-%d %H:%M:%S"
+            ),
+            'region': self.region.name
+        }
 
 
 class EventLog(models.Model):

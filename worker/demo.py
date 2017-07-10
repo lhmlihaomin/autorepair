@@ -23,6 +23,12 @@ import time
 
 import boto3
 
+# add project dir to PYTHONPATH:
+sys.path.append(
+    os.path.abspath("..")
+)
+
+from notification.core import queue_notification
 from asset.models import Region, OnlineEvent, EC2Instance
 
 REGION = 'cn-north-1'
@@ -78,9 +84,36 @@ def restart(region, instance_id):
     return result
 
 
+def init_mq(conf_file_path):
+    with open(conf_file_path, 'r') as conffile:
+        conf = json.loads(conffile.read())
+    mq_conn = pika.BlockingConnection(
+        pika.ConnectionParameters(
+            host=conf['host'],
+            port=int(conf['port']),
+            credentials=pika.PlainCredentials(
+                conf['username'],
+                conf['password']
+            )
+        )
+    )
+    mq_channel = mq_conn.channel()
+    # declare exchange:
+    print("Declaring exchange ...")
+    mq_channel.exchange_declare(
+        exchange="topic_notifications",
+        type="topic"
+    )
+    return (mq_conn, mq_channel)
+
+
 def main():
     # parse arguments:
-    event_id = int(sys.argv[1])
+    try:
+        event_id = int(sys.argv[1])
+    except:
+        print("Usage: python demo.py <event_id>")
+        sys.exit(0)
     # read and update event:
     online_event = OnlineEvent.objects.get(pk=event_id)
     region = online_event.region
@@ -94,6 +127,8 @@ def main():
     online_event.event_state = str(result[0])
     online_event.result_detail = result[1]
     online_event.save()
+    # send result notification:
+    queue_notification(channel, online_event.to_dict())
 
 
 if __name__ == "__main__":
