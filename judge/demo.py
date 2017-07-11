@@ -21,6 +21,7 @@ django.setup()
 
 import json
 import time
+import subprocess
 
 import boto3
 import pika
@@ -30,7 +31,7 @@ sys.path.append(
     os.path.abspath("..")
 )
 
-from asset.models import Region, OnlineEvent
+from asset.models import Region, OnlineEvent, EC2Instance, EventHandleRule
 
 REGION = 'cn-north-1'
 
@@ -84,13 +85,40 @@ def event_handler(channel, method, props, body):
     except:
         # log exception
         return False
+    start_worker(online_event)
+    
+
+def start_worker(online_event):
+    # read information:
+    if online_event.resource_type == 'EC2':
+        instance = EC2Instance.objects.get(
+            instance_id=online_event.resource_id
+        )
+        module = instance.module
     # make decision:
+    try:
+        rule = EventHandleRule.objects.get(
+            module_name=module.name,
+            event_type=online_event.event_type
+        )
+
+    except:
+        # rule not found, do nothing:
+        return 
     # start workers if necessary:
-    pass
+    wd = os.path.dirname(os.path.abspath(__file__))
+    worker_path = os.path.sep.join([wd, '..', 'worker', 'temp.py'])
+    worker_path = os.path.abspath(worker_path)
+    args = [
+        'python',
+        worker_path,
+        str(online_event.id)
+    ]
+    subprocess.Popen(args)
 
 
 def main():
-    # read conf:
+    """# read conf:
     mq_conf_file = "../conf/mq.conf.json"
     region = Region.objects.get(name=REGION)
     mq_conn, mq_channel = init_mq(mq_conf_file)
@@ -100,7 +128,9 @@ def main():
     except KeyboardInterrupt:
         mq_conn.close()
         print("")
-        print("Bye.")
+        print("Bye.")"""
+    online_event = OnlineEvent.objects.get(pk=11)
+    start_worker(online_event)
 
 
 if __name__ == "__main__":
