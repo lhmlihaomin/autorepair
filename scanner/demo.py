@@ -82,8 +82,7 @@ def get_events(region):
 
 def create_event(event, channel):
     try:
-        # test if event already exists:
-        # TODO: check only "unassigned" events
+        # check if event already exists:
         OnlineEvent.objects.get(
             resource_id=event['resource_id'], 
             event_type=event['event_type'], 
@@ -120,7 +119,17 @@ def main():
 
     mq_conn, mq_channel = init_mq(mq_conf_file)
     # In this demo, only "instance_status" events are scanned:
-    events = get_events(region)
+    #events = get_events(region)
+    # dummy event:
+    event = {
+        'source': 'instance_status',
+        'resource_type': 'EC2',
+        'resource_id': 'i-0991511e8aa86a2cb',
+        'event_type': 'instance-stop',
+        'detail': 'The instance is running on degraded hardware',
+        'region': 'cn-north-1'
+    }
+    events = [event,]
     for event in events:
         # push events into queue:
         create_event(event, mq_channel)

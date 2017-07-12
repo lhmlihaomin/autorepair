@@ -70,7 +70,8 @@ def init_mq(conf_file_path):
         )
         mq_channel.basic_consume(
             event_handler,
-            queue=queue['name']
+            queue=queue['name'],
+            no_ack=True
         )
     return (mq_conn, mq_channel)
 
