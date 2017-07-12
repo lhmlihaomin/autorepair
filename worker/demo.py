@@ -22,6 +22,7 @@ import json
 import time
 
 import boto3
+import pika
 
 # add project dir to PYTHONPATH:
 sys.path.append(
@@ -66,11 +67,6 @@ def step_start_instance(ec2_resource, instance_id):
 
 
 def do_restart(region, instance_id):
-    print("Will restart instance %s in region %s"%(
-        instance_id, 
-        region.name
-    ))
-    return (True, "")
     # init boto3:
     session = boto3.Session(
         profile_name=region.profile_name,
@@ -117,12 +113,16 @@ def main():
         'restart': do_restart
     }
     # parse arguments:
+    print(sys.argv)
     try:
         event_id = int(sys.argv[1])
         action = sys.argv[2]
     except:
         print("Usage: python demo.py <event_id>")
-        sys.exit(0)
+        sys.exit(1)
+    # init MQ:
+    mq_conf_file = "../conf/mq.conf.json"
+    mq_conn, mq_channel = init_mq(mq_conf_file)
     # read and update event:
     online_event = OnlineEvent.objects.get(pk=event_id)
     region = online_event.region
@@ -138,7 +138,7 @@ def main():
     online_event.result_detail = result[1]
     online_event.save()
     # send result notification:
-    queue_notification(channel, online_event.to_dict())
+    queue_notification(mq_channel, online_event.to_dict())
 
 
 if __name__ == "__main__":

@@ -107,18 +107,19 @@ def start_worker(online_event):
         return 
     # start workers if necessary:
     wd = os.path.dirname(os.path.abspath(__file__))
-    worker_path = os.path.sep.join([wd, '..', 'worker', 'temp.py'])
+    worker_path = os.path.sep.join([wd, '..', 'worker', 'demo.py'])
     worker_path = os.path.abspath(worker_path)
     args = [
         'python',
         worker_path,
-        str(online_event.id)
+        str(online_event.id),
+        rule.handler
     ]
     subprocess.Popen(args)
 
 
 def main():
-    """# read conf:
+    # read conf:
     mq_conf_file = "../conf/mq.conf.json"
     region = Region.objects.get(name=REGION)
     mq_conn, mq_channel = init_mq(mq_conf_file)
@@ -128,9 +129,9 @@ def main():
     except KeyboardInterrupt:
         mq_conn.close()
         print("")
-        print("Bye.")"""
-    online_event = OnlineEvent.objects.get(pk=11)
-    start_worker(online_event)
+        print("Bye.")
+    """online_event = OnlineEvent.objects.get(pk=11)
+    start_worker(online_event)"""
 
 
 if __name__ == "__main__":

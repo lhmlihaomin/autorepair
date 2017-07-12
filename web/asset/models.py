@@ -91,7 +91,7 @@ class OnlineEvent(models.Model):
 
     def to_dict(self):
         return {
-            'source': sel.source,
+            'source': self.source,
             'resource_type': self.resource_type,
             'event_type': self.event_type,
             'resource_id': self.resource_id,
