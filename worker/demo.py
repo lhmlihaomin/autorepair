@@ -65,7 +65,12 @@ def step_start_instance(ec2_resource, instance_id):
         return (False, "Instance start timed out.")
 
 
-def restart(region, instance_id):
+def do_restart(region, instance_id):
+    print("Will restart instance %s in region %s"%(
+        instance_id, 
+        region.name
+    ))
+    return (True, "")
     # init boto3:
     session = boto3.Session(
         profile_name=region.profile_name,
@@ -108,9 +113,13 @@ def init_mq(conf_file_path):
 
 
 def main():
+    actions = {
+        'restart': do_restart
+    }
     # parse arguments:
     try:
         event_id = int(sys.argv[1])
+        action = sys.argv[2]
     except:
         print("Usage: python demo.py <event_id>")
         sys.exit(0)
@@ -122,7 +131,8 @@ def main():
         online_event.resource_id,
         region.name
     ))
-    result = restart(region, online_event.resource_id)
+    action_func = actions[action]
+    result = action_func(region, online_event.resource_id)
     # write back result:
     online_event.event_state = str(result[0])
     online_event.result_detail = result[1]

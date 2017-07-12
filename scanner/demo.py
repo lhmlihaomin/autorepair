@@ -87,7 +87,7 @@ def create_event(event, channel):
         OnlineEvent.objects.get(
             resource_id=event['resource_id'], 
             event_type=event['event_type'], 
-            event_state=""
+            event_state="new"
         )
         print("Event already exists.")
     except:
@@ -98,7 +98,7 @@ def create_event(event, channel):
         online_event.resource_id = event['resource_id']
         online_event.event_type = event['event_type']
         online_event.detail = event['detail']
-        online_event.event_state = ""
+        online_event.event_state = "new"
         online_event.result_detail = ""
         online_event.region = Region.objects.get(name=event['region'])
         online_event.save()

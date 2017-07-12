@@ -73,7 +73,12 @@ class ELB(models.Model):
 
 
 class OnlineEvent(models.Model):
-    """An online event"""
+    """
+    An online event.
+        `event_state` workflow:
+        new --> in_progress --> solved
+                      (or) \--> error
+    """
     source = models.CharField(max_length=500)
     resource_type = models.CharField(max_length=500)
     event_type = models.CharField(max_length=500)
