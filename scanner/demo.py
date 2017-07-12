@@ -83,12 +83,20 @@ def get_events(region):
 def create_event(event, channel):
     try:
         # check if event already exists:
-        OnlineEvent.objects.get(
+        online_event = OnlineEvent.objects.get(
             resource_id=event['resource_id'], 
             event_type=event['event_type'], 
             event_state="new"
         )
         print("Event already exists.")
+        # TODO: delete this:
+        event.update({'event_id': online_event.id})
+        result = channel.basic_publish(
+            exchange="topic_events",
+            routing_key="events.ec2."+event['event_type'],
+            body=json.dumps(event)
+        )
+        print result
     except:
         # create event in database:
         online_event = OnlineEvent()

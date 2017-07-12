@@ -83,8 +83,9 @@ def event_handler(channel, method, props, body):
         event = json.loads(body)
         # lookup module info:
         online_event = OnlineEvent.objects.get(pk=event['event_id'])
-    except:
+    except Exception as ex:
         # log exception
+        print(ex,)
         return False
     start_worker(online_event)
     
