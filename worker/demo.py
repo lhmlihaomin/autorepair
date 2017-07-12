@@ -134,7 +134,10 @@ def main():
     action_func = actions[action]
     result = action_func(region, online_event.resource_id)
     # write back result:
-    online_event.event_state = str(result[0])
+    if result[0]:
+        online_event.event_state = "solved"
+    else:
+        online_event.event_state = "error" 
     online_event.result_detail = result[1]
     online_event.save()
     # send result notification:
