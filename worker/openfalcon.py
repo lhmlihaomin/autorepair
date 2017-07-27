@@ -63,6 +63,7 @@ def openfalcon_login(login_url,
 
 
 def openfalcon_logout(session, logout_url):
+    """Visit logout url to log out session."""
     response = session.get(logout_url)
     return response
 
