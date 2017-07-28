@@ -57,7 +57,7 @@ def step_disable_alarm(openfalcon_config,  instance_id):
         session,
         openfalcon_config['logout_url']
     )
-    return True
+    return (True, "OK")
 
 def step_enable_alarm(openfalcon_config, instance_id):
     # read instance:
@@ -79,7 +79,7 @@ def step_enable_alarm(openfalcon_config, instance_id):
         session,
         openfalcon_config['logout_url']
     )
-    return True
+    return (True, "OK")
 
 def step_stop_instance(ec2_resource, instance_id):
     """Step to stop an EC2 instance"""
