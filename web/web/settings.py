@@ -129,3 +129,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MQ_CONFIG_FILE = os.path.abspath(os.path.sep.join([
+    os.path.dirname(
+        os.path.abspath(__file__)
+    ),
+    "..",
+    "..",
+    "conf",
+    "mq.conf.json",
+]))
