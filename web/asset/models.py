@@ -104,6 +104,10 @@ class OnlineEvent(models.Model):
             'region': self.region.name
         }
 
+    @property
+    def region_name(self):
+        return self.region.name
+
 
 class EventLog(models.Model):
     """Online event log"""

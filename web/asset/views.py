@@ -5,8 +5,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 import boto3
 import pytz
+#from rest_framework.views import APIView
+from rest_framework import generics
 
-from .models import Region, EC2Instance, Module
+from asset.models import Region, EC2Instance, Module, OnlineEvent
+from asset.serializers import OnlineEventSerializer
 
 
 def get_resource_name(resource):
@@ -104,3 +107,16 @@ def sync_ec2(request):
             ec2instance.save()
 
     return HttpResponse(output)
+
+
+class OnlineEventList(generics.ListCreateAPIView):
+    queryset = OnlineEvent.objects.all()
+    serializer_class = OnlineEventSerializer
+
+class OnlineEventCreation(generics.CreateAPIView):
+    queryset = OnlineEvent.objects.all()
+    serializer_class = OnlineEventSerializer
+
+class OnlineEventDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = OnlineEvent.objects.all()
+    serializer_class = OnlineEventSerializer
