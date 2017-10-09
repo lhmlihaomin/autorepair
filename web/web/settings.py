@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import sys
+import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +27,7 @@ SECRET_KEY = '0%lyy7*9v5(&)9$^08!&4la&ufzzr8^@-&dr_4#_@#r&p80jy0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*",]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -39,8 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 3rd party:
     'rest_framework',
-    # project app:
+    'rest_framework.authtoken',
+    # Project apps:
     'asset',
+    'apiserver.apps.ApiserverConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -77,12 +82,13 @@ WSGI_APPLICATION = 'web.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#    }
-#}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -93,6 +99,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -132,12 +139,72 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MQ_CONFIG_FILE = os.path.abspath(os.path.sep.join([
-    os.path.dirname(
-        os.path.abspath(__file__)
-    ),
-    "..",
-    "..",
-    "conf",
-    "mq.conf.json",
-]))
+PROJECT_DIR = os.path.dirname(BASE_DIR)
+# RabbitMQ settings:
+MQ_CONF_FILE = os.path.sep.join([
+    PROJECT_DIR,
+    'conf',
+    'mq.conf.json'
+])
+MQ_CONF = None
+with open(MQ_CONF_FILE, 'r') as fp:
+    MQ_CONF = json.loads(fp.read())
+
+# Add project dir to PATH:    
+sys.path.append(PROJECT_DIR)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s',
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        }
+    },
+    'handlers': {
+        'web': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.sep.join([BASE_DIR, 'logs', 'web.log']),
+            'formatter': 'verbose',
+            'maxBytes': 1024*1024*10,
+            'backupCount': 10
+        },
+        'judge': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.sep.join([PROJECT_DIR, 'judge', 'logs', 'judge.log']),
+            'formatter': 'verbose',
+            'maxBytes': 1024,
+            'backupCount': 10
+        },
+        'worker': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.sep.join([PROJECT_DIR, 'worker', 'logs', 'worker.log']),
+            'formatter': 'verbose',
+            'maxBytes': 1024,
+            'backupCount': 10
+        },
+    },
+    'loggers': {
+        'web': {
+            'handlers': ['web',],
+            'level': 'DEBUG',
+            'propagate': True
+        },
+        'judge': {
+            'handlers': ['judge',],
+            'level': 'DEBUG',
+            'propagate': True
+        },
+        'worker': {
+            'handlers': ['worker',],
+            'level': 'DEBUG',
+            'propagate': True
+        },
+    }
+}

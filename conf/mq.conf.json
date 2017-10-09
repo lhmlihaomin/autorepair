@@ -1,43 +1,76 @@
 {
     "host": "localhost",
-    "port": "5672",
+    "port": 5672,
     "username": "autorepair",
     "password": "autorepair",
-    "exchanges": [
-        {   
-            "name": "topic_events",
-            "type": "topic"
-        },  
-        {   
-            "name": "topic_notifications",
-            "type": "topic"
-        }   
-    ],  
-    "queues": [
-        {   
-            "name": "q_ec2",
-            "exchange": "topic_events",
-            "routing_key": "events.ec2.#"
-        },  
-        {   
-            "name": "q_elb",
-            "exchange": "topic_events",
-            "routing_key": "events.elb.#"
-        },  
-        {   
-            "name": "q_rds",
-            "exchange": "topic_events",
-            "routing_key": "events.rds.#"
-        },  
-        {   
-            "name": "q_notification",
-            "exchange": "topic_notifications",
-            "routing_key": "notifications.notification.#"
-        },
-        {
-            "name": "q_exception",
-            "exchange": "topic_notifications",
-            "routing_key": "notifications.exception.#"
+
+    "judge": {
+        "exchanges": [
+            {
+                "name": "topic_events",
+                "type": "topic"
+            },
+            {
+                "name": "topic_notifications",
+                "type": "topic"
+            }
+        ],
+        "queues": [
+            {
+                "name": "q_ec2",
+                "exchange": "topic_events",
+                "routing_key": "events.ec2.#"
+            }
+        ],
+        "callbacks": {
+            "q_ec2": "callback_events_ec2"
         }
-    ]   
+    },
+
+    "worker": {
+        "exchanges": [
+            {
+                "name": "topic_notifications",
+                "type": "topic"
+            }
+        ]
+    },
+
+    "notification": {
+        "exchanges": [
+            {   
+                "name": "topic_notifications",
+                "type": "topic"
+            }   
+        ],  
+        "queues": [
+            {   
+                "name": "q_notification",
+                "exchange": "topic_notifications",
+                "routing_key": "notifications.notification.#"
+            },
+            {
+                "name": "q_exception",
+                "exchange": "topic_notifications",
+                "routing_key": "notifications.exception.#"
+            }
+        ],
+        "callbacks": {
+            "q_notification": "callback_send_notification",
+            "q_exception": "callback_send_exception"
+        }
+    },
+
+    "apiserver": {
+        "exchanges": [
+            {
+                "name": "topic_events",
+                "type": "topic"
+            },
+            {
+                "name": "topic_notifications",
+                "type": "topic"
+            }
+        ]
+    }
 }

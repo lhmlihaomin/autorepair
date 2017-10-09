@@ -31,55 +31,9 @@ sys.path.append(
 
 from notification.core import queue_notification
 from asset.models import Region, OnlineEvent, EC2Instance
-from openfalcon import get_openfalcon_host_name, openfalcon_login, \
-        openfalcon_logout, openfalcon_enable, openfalcon_disable
 
 REGION = 'cn-north-1'
 
-
-def step_disable_alarm(openfalcon_config,  instance_id):
-    # read instance:
-    instances = [EC2Instance.objects.get(instance_id=instance_id),]
-    # login:
-    session = openfalcon_login(
-        openfalcon_config['login_url'],
-        openfalcon_config['username'],
-        openfalcon_config['password']
-    )
-    # disable alarm:
-    openfalcon_disable(
-        session,
-        openfalcon_config['switch_url'],
-        instances
-    )
-    # logout:
-    openfalcon_logout(
-        session,
-        openfalcon_config['logout_url']
-    )
-    return (True, "OK")
-
-def step_enable_alarm(openfalcon_config, instance_id):
-    # read instance:
-    instances = [EC2Instance.objects.get(instance_id=instance_id),]
-    # login:
-    session = openfalcon_login(
-        openfalcon_config['login_url'],
-        openfalcon_config['username'],
-        openfalcon_config['password']
-    )
-    # disable alarm:
-    openfalcon_enable(
-        session,
-        openfalcon_config['switch_url'],
-        instances
-    )
-    # logout:
-    openfalcon_logout(
-        session,
-        openfalcon_config['logout_url']
-    )
-    return (True, "OK")
 
 def step_stop_instance(ec2_resource, instance_id):
     """Step to stop an EC2 instance"""
@@ -131,20 +85,6 @@ def do_restart(region, instance_id):
     return result
 
 
-def do_disable_alarm(region, instance_id):
-    openfalcon_conf_file = "../conf/openfalcon.conf.json"
-    with open(openfalcon_conf_file, 'r') as fp:
-        conf = json.loads(fp.read())
-    return step_disable_alarm(conf, instance_id)
-
-
-def do_enable_alarm(region, instance_id):
-    openfalcon_conf_file = "../conf/openfalcon.conf.json"
-    with open(openfalcon_conf_file, 'r') as fp:
-        conf = json.loads(fp.read())
-    return step_enable_alarm(conf, instance_id)
-
-
 def init_mq(conf_file_path):
     with open(conf_file_path, 'r') as conffile:
         conf = json.loads(conffile.read())
@@ -170,9 +110,7 @@ def init_mq(conf_file_path):
 
 def main():
     actions = {
-        'restart': do_restart,
-        'disable_alarm': do_disable_alarm,
-        'enable_alarm': do_enable_alarm
+        'restart': do_restart
     }
     # parse arguments:
     print(sys.argv)
@@ -180,7 +118,7 @@ def main():
         event_id = int(sys.argv[1])
         action = sys.argv[2]
     except:
-        print("Usage: python demo.py <event_id> <action>")
+        print("Usage: python demo.py <event_id>")
         sys.exit(1)
     # init MQ:
     mq_conf_file = "../conf/mq.conf.json"
@@ -208,4 +146,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

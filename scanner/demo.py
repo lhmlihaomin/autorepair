@@ -129,8 +129,6 @@ def main():
     # In this demo, only "instance_status" events are scanned:
     #events = get_events(region)
     # dummy event:
-    # restart event:
-    """
     event = {
         'source': 'instance_status',
         'resource_type': 'EC2',
@@ -139,28 +137,6 @@ def main():
         'detail': 'The instance is running on degraded hardware',
         'region': 'cn-north-1'
     }
-    """
-    # enable event:
-    """
-    event = {
-        'source': 'instance_status',
-        'resource_type': 'EC2',
-        'resource_id': 'i-0991511e8aa86a2cb',
-        'event_type': 'enable-alarm',
-        'detail': 'Enable alarm for this instance.',
-        'region': 'cn-north-1'
-    }
-    """
-    # disable event:
-    event = {
-        'source': 'instance_status',
-        'resource_type': 'EC2',
-        'resource_id': 'i-0991511e8aa86a2cb',
-        'event_type': 'disable-alarm',
-        'detail': 'Disable alarm for this instance.',
-        'region': 'cn-north-1'
-    }
-
     events = [event,]
     for event in events:
         # push events into queue:

@@ -1,0 +1,14 @@
+{
+    "message_queue":{
+        "event_exchange_name": "topic_events",
+        "notification_exchange_name": "topic_notifications",
+        "queues": [
+            {
+                "name": "q_ec2",
+                "exchange": "topic_events",
+                "routing_key": "events.ec2.#",
+                "callback": "callback_events_ec2"
+            }
+        ]
+    }
+}
