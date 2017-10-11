@@ -185,7 +185,7 @@ def localtime_now():
 def main():
     actions = {
         'restart': do_restart,
-        'replace': 'do_replace',
+        'replace': do_replace,
     }
     # Parse arguments:
     try:
@@ -209,6 +209,9 @@ def main():
     online_event = OnlineEvent.objects.get(pk=event_id)
     region = online_event.region
     # Execute action:
+    action_func = actions.get(action)
+    if action_func is not None:
+        result = action_func(region, online_event.resource_id)
 
 
 def testmain():
@@ -225,5 +228,5 @@ def testmain():
     print(result)
 
 if __name__ == '__main__':
-    testmain()
+    main()
 

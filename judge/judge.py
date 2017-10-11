@@ -122,8 +122,8 @@ def main():
 
     try:
         logger.info("Start consuming.")
-        mq_conn.close()
-        #mq_channel.start_consuming()
+        #mq_conn.close()
+        mq_channel.start_consuming()
     except KeyboardInterrupt:
         logger.info("Keyboard interrupt. Stopping.")
         print("")
