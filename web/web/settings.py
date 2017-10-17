@@ -208,3 +208,5 @@ LOGGING = {
         },
     }
 }
+
+PEM_DIR = "/home/ubuntu/pem"
