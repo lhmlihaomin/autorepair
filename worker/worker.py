@@ -96,7 +96,7 @@ def step_run_instance(ec2_resource, instance_id):
     new_instance = EC2Instance(
         module=module,
         region=module.region,
-        status=True,
+        status=False,
         active=True,
         last_update_time=localtime_now(),
         name=find_name_tag(instance),
