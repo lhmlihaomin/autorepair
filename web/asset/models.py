@@ -78,7 +78,6 @@ class Module(models.Model):
         elif self.profile.name.endswith("mercury"):
             return "mprd"
 
-
     @property
     def instance_name_prefix(self):
         return "-".join([
@@ -88,6 +87,10 @@ class Module(models.Model):
         self.version,
         self.region.tag_name
     ])
+
+    @property
+    def current_version(self):
+        return self.version
 
 
 class EC2Instance(models.Model):
