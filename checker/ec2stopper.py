@@ -40,7 +40,7 @@ import datetime
 import threading
 import traceback
 
-from schtasks.ssh import SshHandler
+from checker.ssh import SshHandler
 
 class EC2CheckerException(Exception):
     pass

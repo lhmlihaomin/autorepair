@@ -20,7 +20,7 @@ from fabric.api import *
 #from ec2mgr.models import EC2Instance
 from asset.models import EC2Instance
 #from awsresourcemgr.models import NTPServerDefinition
-from schtasks.ssh import SshHandler
+from checker.ssh import SshHandler
 
 from django.conf import settings as djconf
 
