@@ -304,8 +304,8 @@ class EC2Checker(object):
         #self.ec2instance.note = ""
         self.ec2instance.status = True
         # update last check time:
-        #now = self.timezone.localize(datetime.datetime.now())
-        #self.ec2instance.last_checked_at = now
+        now = self.timezone.localize(datetime.datetime.now())
+        self.ec2instance.last_checked_at = now
         for check_name in results.keys():
             if not results[check_name]:
                 # some check failed:

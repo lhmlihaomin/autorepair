@@ -45,6 +45,7 @@ from lib_msg_q import get_mq_connection
 ########################## Callbacks ##########################################
 def callback_events_ec2(channel, method, props, body):
     """Consume events and take actions."""
+    global logger
     # parse message as JSON string:
     try:
         event = json.loads(body)
@@ -55,6 +56,7 @@ def callback_events_ec2(channel, method, props, body):
         # log exception
         print(ex,)
         return False
+    logger.info('Starting worker for event '+str(event['event_id']))
     start_worker(online_event)
 ###############################################################################
 
@@ -67,8 +69,9 @@ def start_worker(online_event):
     ---
     online_event: json obj
     """
+    global logger
     # read information:
-    if online_event.resource_type == 'EC2':
+    if online_event.resource_type.lower() == 'ec2':
         try:
             instance = EC2Instance.objects.get(
                 instance_id=online_event.resource_id
@@ -100,6 +103,7 @@ def start_worker(online_event):
         str(online_event.id),
         rule.handler
     ]
+    logger.info(' '.join(args))
     subprocess.Popen(args)
 
 
