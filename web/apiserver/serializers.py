@@ -56,7 +56,7 @@ class EC2InstanceSerializer(serializers.ModelSerializer):
     """Serializer class for EC2 instance."""
     class Meta:
         model = EC2Instance
-        fields = ('module', 'region', 'status', 'active', 'last_update_time',\
+        fields = ('module', 'region', 'status', 'active', 'created_at',\
                   'name', 'instance_id', 'username', 'private_ip_address',\
                   'key_pair')
                   

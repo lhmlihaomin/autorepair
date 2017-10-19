@@ -87,7 +87,7 @@ def read_instances(region, instance_ids):
             'region': module.region.id,
             'status': True,
             'active': True,
-            'last_update_time': now,
+            'created_at': now,
             'name': get_instance_name(instance),
             'instance_id': instance.id,
             'username': 'ubuntu',

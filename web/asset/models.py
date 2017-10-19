@@ -105,16 +105,17 @@ class EC2Instance(models.Model):
         True: OK, False: down.
     active: bool
         True: in use, False: decommissioned.
-    last_update_time: datetime
-        Latest instance status update.
+    created_at: datetime
+        Time when this instance is created.
+    last_checked_at: datetime
+        Time of last check operation on this instance.
     name: str
         `Name` tag of instance.
     instance_id: str
     username: str
     private_ip_address: str
     key_pair: str
-        Name of SSH key without `.pem` extension.
-    
+        Name of SSH key without `.pem` extension.    
     """
     # belonging:
     module = models.ForeignKey(Module)
@@ -122,7 +123,9 @@ class EC2Instance(models.Model):
     # status:
     status = models.BooleanField()
     active = models.BooleanField(default=True)
-    last_update_time = models.DateTimeField()
+    #last_update_time = models.DateTimeField()
+    last_checked_at = models.DateTimeField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     # static information:
     name = models.CharField(max_length=500)
     instance_id = models.CharField(max_length=500)

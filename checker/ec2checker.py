@@ -22,8 +22,6 @@ from asset.models import EC2Instance
 #from awsresourcemgr.models import NTPServerDefinition
 from checker.ssh import SshHandler
 
-from django.conf import settings as djconf
-
 
 class EC2CheckerException(Exception):
     pass
