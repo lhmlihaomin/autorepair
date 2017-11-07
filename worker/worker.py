@@ -142,6 +142,7 @@ def step_isolate_instance(ec2_resource, instance_id):
 ############################## TASK FUNCTIONS #################################
 def do_restart(region, instance_id):
     """Task to restart an instance (by stop and start, not reboot)"""
+    global logger
     # init boto3:
     session = boto3.Session(
         profile_name=region.profile_name,
@@ -149,19 +150,24 @@ def do_restart(region, instance_id):
     )
     ec2_resource = session.resource('ec2')
     # stop instance:
+    logger.info("Stopping instance %s"%(instance_id,))
     print("Stopping instance %s"%(instance_id,))
     result = step_stop_instance(ec2_resource, instance_id)
     print result
+    logger.info(result)
     if not result[0]:
         return result
     # start instance
     print("Starting instance %s"%(instance_id,))
+    logger.info("Starting instance %s"%(instance_id,))
     result = step_start_instance(ec2_resource, instance_id)
+    logger.info(result)
     return result
 
 
 def do_replace(region, instance_id):
     """Task to replace the instance with a new one."""
+    global logger
     # init boto3:
     session = boto3.Session(
         profile_name=region.profile_name,
@@ -169,11 +175,15 @@ def do_replace(region, instance_id):
     )
     ec2_resource = session.resource('ec2')
     # Start a new instance:
+    logger.info("Starting new instance.")
     result = step_run_instance(ec2_resource, instance_id)
+    logger.info(result)
     if not result[0]:
         return result
     # Isolate old instance:
+    logger.info("Isolating instance %s"%(instance_id,))
     result = step_isolate_instance(ec2_resource, instance_id)
+    logger.info(result)
     return result
 ###############################################################################
 
@@ -214,19 +224,6 @@ def main():
     if action_func is not None:
         result = action_func(region, online_event.resource_id)
 
-
-def testmain():
-    ###
-    region = Region.objects.get(name='cn-north-1')
-    #session = boto3.Session(profile_name='cn-alpha', region_name='cn-north-1')
-    #resource = session.resource('ec2')
-    #ec2_resource = resource
-    ###
-    instance_id = 'i-06fc08b83286621d9'
-    ec2instance = EC2Instance.objects.get(instance_id=instance_id)
-    result = do_replace(region, instance_id)
-
-    print(result)
 
 if __name__ == '__main__':
     main()

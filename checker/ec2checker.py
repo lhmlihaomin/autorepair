@@ -294,27 +294,28 @@ class EC2Checker(object):
     def save_results(self, results):
         if len(results.keys()) == 0:
             #self.ec2instance.service_status = "N/A"
-            #self.ec2instance.note = "Unknown service. No checks run."
             self.ec2instance.status = False
+            self.ec2instance.note = "Unknown service. No checks run."
             self.ec2instance.save()
             return
         #self.ec2instance.service_status = "ok"
-        #self.ec2instance.note = ""
+        self.ec2instance.note = ""
         self.ec2instance.status = True
+        self.ec2instance.active = True
         # update last check time:
         now = self.timezone.localize(datetime.datetime.now())
         self.ec2instance.last_checked_at = now
         for check_name in results.keys():
             if not results[check_name]:
                 # some check failed:
-                if self.is_newinstance:
-                    # if it's just started, mark as not_ready:
-                    dt = now - self.ec2instance.created_at
-                    if dt.seconds < self.ready_threshold:
-                        self.ec2instance.set_not_ready()
-                        break
+                # if instance just started, check later:
+                dt = now - self.ec2instance.created_at
+                if dt.seconds < self.ready_threshold:
+                    self.ec2instance.status = False
+                    break
                 # otherwise mark as down:
-                self.ec2instance.service_status = "down"
+                self.ec2instance.status = False
+                self.ec2instance.active = False
                 self.ec2instance.note += "%s check failed.\n"%(check_name,)
         self.ec2instance.save()
 
@@ -335,6 +336,7 @@ class CheckRunner(threading.Thread):
             print("\r\n\r\n")
             return False
         results = self.ec2checker.run_checks()
+        print(results)
         self.ec2checker.save_results(results)
         return True
 

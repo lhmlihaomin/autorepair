@@ -103,6 +103,7 @@ def start_worker(online_event):
         str(online_event.id),
         rule.handler
     ]
+    print(' '.join(args))
     logger.info(' '.join(args))
     subprocess.Popen(args)
 
@@ -138,3 +139,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
