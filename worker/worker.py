@@ -42,7 +42,8 @@ import boto3
 
 from lib_msg_q import get_mq_connection
 from notification.core import queue_notification
-from asset.models import Region, OnlineEvent, EC2Instance, SecurityGroupIsolated
+from asset.models import OnlineEvent, EC2Instance, SecurityGroupIsolated, \
+    Region, EventLog
 from ec2 import run_instances, add_instance_tags, add_volume_tags,\
     find_name_tag
 
@@ -112,6 +113,7 @@ def step_run_instance(ec2_resource, instance_id):
     # (Background checker should check instance status every 1 minute or 2)
     for i in range(5):
         time.sleep(30)
+        new_instance.refresh_from_db()
         if new_instance.status:
             return (True, "New instance started.")
     # Return false when instance check fails:
@@ -140,9 +142,10 @@ def step_isolate_instance(ec2_resource, instance_id):
 
 
 ############################## TASK FUNCTIONS #################################
-def do_restart(region, instance_id):
+def do_restart(region, online_event):
     """Task to restart an instance (by stop and start, not reboot)"""
     global logger
+    instance_id = online_event.resource_id
     # init boto3:
     session = boto3.Session(
         profile_name=region.profile_name,
@@ -151,23 +154,25 @@ def do_restart(region, instance_id):
     ec2_resource = session.resource('ec2')
     # stop instance:
     logger.info("Stopping instance %s"%(instance_id,))
-    print("Stopping instance %s"%(instance_id,))
+    event_log = EventLog.get_event_log(online_event, 'step_stop_instance')
     result = step_stop_instance(ec2_resource, instance_id)
-    print result
+    event_log.log_result(result)
     logger.info(result)
     if not result[0]:
         return result
     # start instance
-    print("Starting instance %s"%(instance_id,))
     logger.info("Starting instance %s"%(instance_id,))
+    event_log = EventLog.get_event_log(online_event, 'step_start_instance')
     result = step_start_instance(ec2_resource, instance_id)
+    event_log.log_result(result)
     logger.info(result)
     return result
 
 
-def do_replace(region, instance_id):
+def do_replace(region, online_event):
     """Task to replace the instance with a new one."""
     global logger
+    instance_id = online_event.resource_id
     # init boto3:
     session = boto3.Session(
         profile_name=region.profile_name,
@@ -176,13 +181,18 @@ def do_replace(region, instance_id):
     ec2_resource = session.resource('ec2')
     # Start a new instance:
     logger.info("Starting new instance.")
+    event_log = EventLog.get_event_log(online_event, 'step_run_instance')
     result = step_run_instance(ec2_resource, instance_id)
+    #result = (True, "Auto success.")
+    event_log.log_result(result)
     logger.info(result)
     if not result[0]:
         return result
     # Isolate old instance:
     logger.info("Isolating instance %s"%(instance_id,))
+    event_log = EventLog.get_event_log(online_event, 'step_isolate_instance')
     result = step_isolate_instance(ec2_resource, instance_id)
+    event_log.log_result(result)
     logger.info(result)
     return result
 ###############################################################################
@@ -194,9 +204,14 @@ def localtime_now():
     return tz.localize(now)
 
 def main():
+    def tempfunc(*args, **kwargs):
+        print("do_replace")
+        return (False, "Just kidding")
+
     actions = {
         'restart': do_restart,
         'replace': do_replace,
+        #'replace': tempfunc,
     }
     # Parse arguments:
     try:
@@ -206,23 +221,35 @@ def main():
         print("Usage: python worker.py <event_id> <action>")
         sys.exit(1)
     # Init mq:
-    try:
-        mq_conn, mq_channel = get_mq_connection(
-            settings.MQ_CONF,
-            'worker'
-        )
-        logger.info("RabbitMQ connection established.")
-    except:
-        logger.error("Failed to init RabbitMQ connection.")
-        logger.error(traceback.format_exc())
-        sys.exit(1)
+    #try:
+    #    mq_conn, mq_channel = get_mq_connection(
+    #        settings.MQ_CONF,
+    #        'worker'
+    #    )
+    #    logger.info("RabbitMQ connection established.")
+    #except:
+    #    logger.error("Failed to init RabbitMQ connection.")
+    #    logger.error(traceback.format_exc())
+    #    sys.exit(1)
     # Read and update event:
     online_event = OnlineEvent.objects.get(pk=event_id)
+    if online_event.event_state != 'new':
+        print "Event has been assigned. Exiting."
+        return 
     region = online_event.region
     # Execute action:
     action_func = actions.get(action)
     if action_func is not None:
-        result = action_func(region, online_event.resource_id)
+        # Perform action:
+        result = action_func(region, online_event)
+        # Record result:
+        if result[0]:
+            online_event.event_state = 'solved'
+        else:
+            online_event.event_state = 'error'
+        online_event.result_detail = result[1]
+        online_event.save()
+
 
 
 if __name__ == '__main__':

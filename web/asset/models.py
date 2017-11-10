@@ -2,8 +2,16 @@
 from __future__ import unicode_literals
 
 import datetime
+import pytz
 
 from django.db import models
+from django.conf import settings 
+
+def localtime_now():
+    now = datetime.datetime.now()
+    tz = pytz.timezone(settings.TIME_ZONE)
+    return tz.localize(now)
+
 
 class Region(models.Model):
     """
@@ -157,7 +165,7 @@ class OnlineEvent(models.Model):
     resource_type: str
     event_type: str
     resource_id: str
-    event_state: str
+    event_state: str, new|in_progress|solved|error
     detail: text
     result_detail: text
     created_at: datetime, auto
@@ -221,6 +229,22 @@ class EventLog(models.Model):
     result = models.CharField(max_length=100)
     args = models.TextField()
     note = models.TextField()
+
+    @staticmethod
+    def get_event_log(online_event, action_name):
+        event_log = EventLog(
+            event=online_event,
+            start_time=localtime_now(),
+            action=action_name,
+            args=''
+        )
+        return event_log
+
+    def log_result(self, result):
+        self.end_time = localtime_now()
+        self.result=str(result[0])
+        self.note=result[1]
+        self.save()
 
 
 class EventHandleRule(models.Model):

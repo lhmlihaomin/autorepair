@@ -1,3 +1,4 @@
 TODOs:
-1. Write check script.
-2. solve "created_at" issue.
+0. Find a way to mark if a event has been processed or not;
+1. Implement shortcut methods in EventLog model;
+2. Add EventLog to all steps/actions;
