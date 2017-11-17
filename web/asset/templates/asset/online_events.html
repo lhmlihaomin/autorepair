@@ -1,0 +1,61 @@
+{% extends "asset/layout.html" %}
+{% block content %}
+<div class="col-md-2"></div>
+<div class="col-md-8">
+        <form action="." method="GET"><table class="table table-striped">
+            <caption>Filters</caption>
+            <tbody>
+                <tr>
+                    <th>
+                        <label for="iFilterRegion">Region:</label>
+                    </th>
+                    <td>
+                        <input name="region" type="text" id="iFilterRegion" />
+                    </td>
+                    <th>
+                        <label for="iFilterEventState">Event State:</label>
+                    </th>
+                    <td>
+                        <input name="event_state" type="text" id="iFilterEventState" />
+                    </td>
+                    <th>
+                        <label for="iFilterResourceType">Resource Type:</label>
+                    </th>
+                    <td>
+                        <input name="resource_type" type="text" id="iFilterResourceType" />
+                    </td>
+                    <td>
+                        <input type="submit" name="submit" value="Submit" />
+                    </td>
+                </tr>
+            </tbody>
+        </table></form>
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>SOURCE</th>
+                    <th>RESOURCE TYPE</th>
+                    <th>EVENT TYPE</th>
+                    <th>RESOURCE ID</th>
+                    <th>EVENT STATE</th>
+                    <th>CREATED AT</th>
+                    <th>REGION</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr class="{{event.event_state}}">
+                    <td>{{event.source}}</td>
+                    <td>{{event.resource_type}}</td>
+                    <td>{{event.event_type}}</td>
+                    <td>{{event.resource_id}}</td>
+                    <td>{{event.event_state}}</td>
+                    <td>{{event.created_at|date:"Y-m-d H:i:s"}}</td>
+                    <td>{{event.region.name}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</div>
+<div class="col-md-2"></div>
+{% endblock %}
