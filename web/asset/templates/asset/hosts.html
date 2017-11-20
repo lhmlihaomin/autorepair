@@ -1,0 +1,25 @@
+{% extends 'asset/layout.html' %}
+{% block content %}
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <th>NAME</th>
+        <th>INSTANCE ID</th>
+        <th>PRIVATE IP</th>
+        <th>STATUS</th>
+        <th>CREATED AT</th>
+        <th>LAST CHECKED AT</th>
+    </thead>
+    <tbody>
+        {% for host in hosts %}
+        <tr>
+            <td>{{host.name}}</td>
+            <td>{{host.instance_id}}</td>
+            <td>{{host.private_ip_address}}</td>
+            <td>{{host.status}}</td>
+            <td>{{host.created_at|date:"Y-m-d H:i:s"}}</td>
+            <td>{{host.last_checked_at|date:"Y-m-d H:i:s"}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

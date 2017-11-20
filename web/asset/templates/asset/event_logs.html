@@ -1,0 +1,23 @@
+{% extends 'asset/layout.html' %}
+{% block content %}
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <th>EVENT ID</th>
+        <th>ACTION</th>
+        <th>START TIME</th>
+        <th>END TIME</th>
+        <th>RESULT</th>
+    </thead>
+    <tbody>
+        {% for log in event_logs %}
+        <tr>
+            <td>{{log.event.id}}</td>
+            <td>{{log.action}}</td>
+            <td>{{log.start_time}}</td>
+            <td>{{log.end_time}}</td>
+            <td>{{log.result}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -211,3 +211,4 @@ LOGGING = {
 }
 
 PEM_DIR = "/home/ubuntu/pem"
+LOGIN_REDIRECT_URL = "/"

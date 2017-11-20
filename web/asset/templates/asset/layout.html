@@ -3,9 +3,7 @@
     {% load staticfiles %}
 	<head>
 		<meta charset="utf-8" />
-		<title>控制台 - Bootstrap后台管理系统模版Ace下载</title>
-		<meta name="keywords" content="Bootstrap模版,Bootstrap模版下载,Bootstrap教程,Bootstrap中文" />
-		<meta name="description" content="站长素材提供Bootstrap模版,Bootstrap教程,Bootstrap中文翻译等相关Bootstrap插件下载" />
+		<title>AutoRepair - {{title}}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<!-- basic styles -->
 		<link href="{% static 'asset/css/bootstrap.min.css' %}" rel="stylesheet" />
@@ -93,7 +91,7 @@
 								<li class="divider"></li>
 
 								<li>
-									<a href="#">
+									<a href="{% url 'logout' %}">
 										<i class="icon-off"></i>
 										Log Out
 									</a>
@@ -122,40 +120,10 @@
 
 					<ul class="nav nav-list">
 						<li class="active">
-							<a href="index.html">
+							<a href="{% url 'index' %}">
 								<i class="icon-home"></i>
 								<span class="menu-text"> Home </span>
 							</a>
-						</li>
-
-						<li>
-							<a href="#" class="dropdown-toggle">
-								<i class="icon-desktop"></i>
-                                <span class="menu-text"> Hosts </span>
-                                
-                                <b class="arrow icon-angle-down"></b>
-                            </a>
-                            
-                            <ul class="submenu">
-                                <li>
-                                    <a href="#">
-                                        <i class="icon-double-angle-right"></i>
-                                        ap-southeast-1
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="icon-double-angle-right"></i>
-                                        eu-west-1
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="icon-double-angle-right"></i>
-                                        us-east-1
-                                    </a>
-                                </li>
-                            </ul>
 						</li>
 
 						<li>
@@ -168,7 +136,7 @@
 
 							<ul class="submenu">
 								<li>
-									<a href="elements.html">
+									<a href="{% url 'online_events' %}">
 										<i class="icon-double-angle-right"></i>
 										All
 									</a>
@@ -191,28 +159,52 @@
 						</li>
 
 						<li>
-							<a href="#" class="dropdown-toggle">
+                            <a href="#" class="dropdown-toggle">
+                                <i class="icon-desktop"></i>
+                                <span class="menu-text"> Hosts </span>
+                                
+                                <b class="arrow icon-angle-down"></b>
+                            </a>
+                            
+                            <ul class="submenu">
+                                <li>
+                                    <a href="{% url 'hosts' %}">
+                                        <i class="icon-double-angle-right"></i>
+                                        All
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'hosts' %}?region_name=cn-north-1">
+                                        <i class="icon-double-angle-right"></i>
+                                        cn-north-1
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'hosts' %}?region_name=ap-southeast-1">
+                                        <i class="icon-double-angle-right"></i>
+                                        ap-southeast-1
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'hosts' %}?region_name=eu-west-1">
+                                        <i class="icon-double-angle-right"></i>
+                                        eu-west-1
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'hosts' %}?region_name=us-east-1">
+                                        <i class="icon-double-angle-right"></i>
+                                        us-east-1
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+						<li>
+							<a href="{% url 'event_logs' %}">
 								<i class="icon-list"></i>
 								<span class="menu-text"> Event Logs </span>
-
-								<b class="arrow icon-angle-down"></b>
 							</a>
-
-							<ul class="submenu">
-								<li>
-									<a href="tables.html">
-										<i class="icon-double-angle-right"></i>
-										Item 1
-									</a>
-								</li>
-
-								<li>
-									<a href="jqgrid.html">
-										<i class="icon-double-angle-right"></i>
-										Item 2
-									</a>
-								</li>
-							</ul>
 						</li>
 
 					</ul><!-- /.nav-list -->
@@ -230,13 +222,7 @@
 
 					<div class="page-content">
 						<div class="page-header">
-							<h1>
-								{{title}}
-								<small>
-									<i class="icon-double-angle-right"></i>
-									 {{title}}
-								</small>
-							</h1>
+							<h1>{{title}}</h1>
 						</div><!-- /.page-header -->
 
 						<div class="row">

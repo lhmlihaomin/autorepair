@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+    </head>
+    <body>
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <label for="iUsername">Username: </label>
+                <input type="text" name="username" id="iUsername" />
+            </div>
+            <div>
+                <label for="iPassword">Password: </label>
+                <input type="password" name="password": id="iPassword" />
+            </div>
+            <div>
+                <input type="submit" name="login" value="Login" />
+            </div>
+        </form>
+    </body>
+</html>
