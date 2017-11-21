@@ -17,21 +17,23 @@
             <td>{{log.end_time|date:"Y-m-d H:i:s"}}</td>
             <td>
                 {% if log.result == 'True' %}
+                <span class="label label-lg label-primary"><i class="icon-ok"></i> {{log.result}}</span>
                 <span
-                class="btn btn-xs btn-info no-border tooltip-info"
+                class="btn btn-xs btn-white no-border tooltip-info"
                 data-rel="popover"
                 data-placement="left"
                 data-original-title="Note"
                 data-content="{{log.note}}"
-                title="" >{{log.result}}</span>
+                title="" >More...</span>
                 {% else %}
+                <span class="label label-lg label-danger"><i class="icon-exclamation-sign"></i> {{log.result}}</span>
                 <span
-                class="btn btn-xs btn-danger no-border tooltip-error"
+                class="btn btn-xs btn-white no-border tooltip-error"
                 data-rel="popover"
                 data-placement="left"
                 data-original-title="Note"
                 data-content="{{log.note}}"
-                title="" >{{log.result}}</span>
+                title="" >More...</span>
                 {% endif %}
             </td>
         </tr>
