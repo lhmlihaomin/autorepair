@@ -37,6 +37,7 @@
             <th>EVENT STATE</th>
             <th>CREATED AT</th>
             <th>REGION</th>
+            <th>EVENT LOGS</th>
         </tr>
     </thead>
     <tbody>
@@ -49,6 +50,9 @@
             <td>{{event.event_state}}</td>
             <td>{{event.created_at|date:"Y-m-d H:i:s"}}</td>
             <td>{{event.region.name}}</td>
+            <td>
+                <a href="{% url 'event_logs' %}?id={{event.id}}">View Logs</a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>

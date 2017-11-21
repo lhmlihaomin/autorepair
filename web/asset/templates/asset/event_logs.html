@@ -13,9 +13,27 @@
         <tr>
             <td>{{log.event.id}}</td>
             <td>{{log.action}}</td>
-            <td>{{log.start_time}}</td>
-            <td>{{log.end_time}}</td>
-            <td>{{log.result}}</td>
+            <td>{{log.start_time|date:"Y-m-d H:i:s"}}</td>
+            <td>{{log.end_time|date:"Y-m-d H:i:s"}}</td>
+            <td>
+                {% if log.result == 'True' %}
+                <span
+                class="btn btn-xs btn-info no-border tooltip-info"
+                data-rel="popover"
+                data-placement="left"
+                data-original-title="Note"
+                data-content="{{log.note}}"
+                title="" >{{log.result}}</span>
+                {% else %}
+                <span
+                class="btn btn-xs btn-danger no-border tooltip-error"
+                data-rel="popover"
+                data-placement="left"
+                data-original-title="Note"
+                data-content="{{log.note}}"
+                title="" >{{log.result}}</span>
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </tbody>

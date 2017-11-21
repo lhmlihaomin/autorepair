@@ -1,4 +1,38 @@
 {% extends 'asset/layout.html' %}
 {% block content %}
-HELLO!
+<div class="col-sm-6">
+    <div class="widget-box">
+        <div class="widget-header">
+            <h5>
+                <i class="icon-bolt"></i>
+                Online Events
+            </h5>
+        </div>
+        <div class="widget-body">
+            <div class="widget-main">
+                <ul>
+                    <li>{{events_count_error}} events need your attention.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-sm-6">
+    <div class="widget-box">
+        <div class="widget-header">
+            <h5>
+                <i class="icon-desktop"></i>
+                Hosts
+            </h5>
+        </div>
+        <div class="widget-body">
+            <div class="widget-main">
+                <ul>
+                    <li>{{hosts_count_active}} active instances</li>
+                    <li>{{hosts_count_error}} unhealthy instances</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

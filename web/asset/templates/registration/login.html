@@ -1,22 +1,66 @@
-<!DOCTYPE html>
+<!DOCTYPE html>{% load staticfiles %}
 <html>
     <head>
-        <title>Login</title>
+        <title>Autorepair - Login</title>
+        <link href="{% static 'asset/css/bootstrap.min.css' %}" rel="stylesheet" />
+		<link rel="stylesheet" href="{% static 'asset/css/font-awesome.min.css' %}" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="{% static 'asset/css/font-awesome-ie7.min.css' %}" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<!-- fonts -->
+
+		
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" href="{% static 'asset/css/ace.min.css' %}" />
+		<link rel="stylesheet" href="{% static 'asset/css/ace-rtl.min.css' %}" />
+		<link rel="stylesheet" href="{% static 'asset/css/ace-skins.min.css' %}" />
     </head>
     <body>
-        <form method="post">
-            {% csrf_token %}
-            <div>
-                <label for="iUsername">Username: </label>
-                <input type="text" name="username" id="iUsername" />
+        <div class="row">
+            <div class="col-xs-4"></div>
+            <div class="col-xs-4">
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4>Login {{request.session.user.username}}</h4>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div>
+                                    <label for="iUsername">Username: </label>
+                                    <div class="input-group">
+                                        <span class="input-icon input-icon-right">
+                                            <input type="text" name="username" id="iUsername" class="input-xlarge" />
+                                            <i class="icon-user"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="iPassword">Password: </label>
+                                    <div class="input-group">
+                                        <span class="input-icon input-icon-right">
+                                            <input type="password" name="password": id="iPassword" class="input-xlarge" />
+                                            <i class="icon-lock"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <hr/>
+                                <div>
+                                    <input class="btn btn-info" type="submit" name="login" value="Login" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <label for="iPassword">Password: </label>
-                <input type="password" name="password": id="iPassword" />
-            </div>
-            <div>
-                <input type="submit" name="login" value="Login" />
-            </div>
-        </form>
+            <div class="col-xs-4"></div>
+        </div>
     </body>
 </html>

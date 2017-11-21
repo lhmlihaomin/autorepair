@@ -67,7 +67,7 @@
 								<img class="nav-user-photo" src="{% static 'asset/avatars/user.jpg' %}" alt="Jason's Photo" />
 								<span class="user-info">
                                     <small>User Role</small>
-                                    Username
+                                    {{user.get_username}}
 								</span>
 
 								<i class="icon-caret-down"></i>
@@ -209,9 +209,6 @@
 
 					</ul><!-- /.nav-list -->
 
-					<div class="sidebar-collapse" id="sidebar-collapse">
-						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
-					</div>
 
 					<script type="text/javascript">
 						try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
@@ -300,6 +297,7 @@
 		<!-- inline scripts related to this page -->
 
 		<script type="text/javascript">
+			$('[data-rel=popover]').popover({html:true});
 			jQuery(function($) {
 				$('.easy-pie-chart.percentage').each(function(){
 					var $box = $(this).closest('.infobox');
@@ -322,8 +320,6 @@
 					var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
 					$(this).sparkline('html', {tagValuesAttribute:'data-values', type: 'bar', barColor: barColor , chartRangeMin:$(this).data('min') || 0} );
 				});
-			
-			
 			
 			
 			  var placeholder = $('#piechart-placeholder').css({'width':'90%' , 'min-height':'150px'});

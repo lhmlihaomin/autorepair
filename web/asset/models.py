@@ -181,7 +181,7 @@ class OnlineEvent(models.Model):
     resource_type = models.CharField(max_length=500)
     event_type = models.CharField(max_length=500)
     resource_id = models.CharField(max_length=500)
-    event_state = models.CharField(max_length=100)
+    event_state = models.CharField(max_length=100, default="new")
     detail = models.TextField()
     result_detail = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

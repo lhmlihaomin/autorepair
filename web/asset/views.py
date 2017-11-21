@@ -19,6 +19,14 @@ class IndexView(View):
 
     @method_decorator(login_required)
     def get(self, request):
+        events_count_error = OnlineEvent.objects.filter(event_state='error').count()
+        hosts_count_active = EC2Instance.objects.all().count()
+        hosts_count_error = EC2Instance.objects.filter(active=True, status=False).count()
+        self.context.update({
+            'events_count_error': events_count_error,
+            'hosts_count_active': hosts_count_active,
+            'hosts_count_error': hosts_count_error,
+        })
         return render(request, self.template_name, self.context)
     
 
@@ -42,9 +50,10 @@ class OnlineEventsView(View):
     context = {
         'title': "Online Events"
     }
-
+    
     @method_decorator(login_required)
     def get(self, request):
+        print request.user.username
         events = OnlineEvent.objects.all()
         filters = {}
         if request.GET.get('region_name'):
@@ -56,7 +65,6 @@ class OnlineEventsView(View):
         if request.GET.get('resource_type'):
             events = events.filter(resource_type=request.GET.get('resource_type'))
             filters['resource_type'] = request.GET.get('resource_type')
-        print(filters)
         self.context['events'] = events
         self.context['filters'] = filters
         return render(request, self.template_name, self.context)
@@ -69,10 +77,10 @@ class EventLogsView(View):
     }
 
     def get(self, request):
-        self.context['event_logs'] = EventLog.objects.all()
+        if request.GET.get('id'):
+            event_logs = EventLog.objects.filter(event__id=request.GET.get('id'))
+        else:
+            event_logs = EventLog.objects.all()
+        self.context['event_logs'] = event_logs
         return render(request, self.template_name, self.context)
 
-
-
-class EC2InstanceView():
-    pass
