@@ -140,6 +140,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
 PROJECT_DIR = os.path.dirname(BASE_DIR)
 # RabbitMQ settings:
 MQ_CONF_FILE = os.path.sep.join([
