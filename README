@@ -2,3 +2,6 @@ TODOs:
 0. Find a way to mark if a event has been processed or not;
 1. Implement shortcut methods in EventLog model;
 2. Add EventLog to all steps/actions;
+3. def do_isolate_instance;
+4. step to enable/disable alarms;
+

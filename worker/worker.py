@@ -142,6 +142,25 @@ def step_isolate_instance(ec2_resource, instance_id):
 
 
 ############################## TASK FUNCTIONS #################################
+def do_isolate(region, online_event):
+    """Apply closed security group to resource"""
+    global logger
+    instance_id = online_event.resource_id
+    # init boto3
+    session = boto3.Session(
+        profile_name=region.profile_name,
+        region_name=region.name
+    )
+    ec2_resource = session.resource('ec2')
+    # Isolate old instance:
+    logger.info("Isolating instance %s"%(instance_id,))
+    event_log = EventLog.get_event_log(online_event, 'step_isolate_instance')
+    result = step_isolate_instance(ec2_resource, instance_id)
+    event_log.log_result(result)
+    logger.info(result)
+    return result
+ 
+
 def do_restart(region, online_event):
     """Task to restart an instance (by stop and start, not reboot)"""
     global logger
@@ -212,6 +231,7 @@ def main():
         'restart': do_restart,
         'replace': do_replace,
         #'replace': tempfunc,
+        'isolate': do_isolate,
     }
     # Parse arguments:
     try:
