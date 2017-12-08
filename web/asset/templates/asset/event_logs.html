@@ -20,18 +20,18 @@
                 <span class="label label-lg label-primary"><i class="icon-ok"></i> {{log.result}}</span>
                 <span
                 class="btn btn-xs btn-white no-border tooltip-info"
-                data-rel="popover"
+                data-toggle="popover"
                 data-placement="left"
-                data-original-title="Note"
+                data-original-title="OK"
                 data-content="{{log.note}}"
                 title="" >More...</span>
                 {% else %}
                 <span class="label label-lg label-danger"><i class="icon-exclamation-sign"></i> {{log.result}}</span>
                 <span
                 class="btn btn-xs btn-white no-border tooltip-error"
-                data-rel="popover"
+                data-toggle="popover"
                 data-placement="left"
-                data-original-title="Note"
+                data-original-title="Failed"
                 data-content="{{log.note}}"
                 title="" >More...</span>
                 {% endif %}
@@ -40,4 +40,10 @@
         {% endfor %}
     </tbody>
 </table>
+{% endblock %}
+
+{% block page_js %}
+<script type="text/javascript">
+$("[data-toggle=popover]").popover()
+</script>
 {% endblock %}
