@@ -216,3 +216,12 @@ LOGGING = {
 
 PEM_DIR = "/home/ubuntu/pem"
 LOGIN_REDIRECT_URL = "/"
+OPENFALCON = {
+    "login_url": "aaa",
+    "logout_url": "bbb"
+    "switch_url": "ccc",
+    "username": "user",
+    "password": "pass",
+    "cert_file": "/path/to/cert/file",
+    "cert_key": "/path/to/cert/key",
+}

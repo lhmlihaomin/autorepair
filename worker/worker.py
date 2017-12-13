@@ -46,9 +46,53 @@ from asset.models import OnlineEvent, EC2Instance, SecurityGroupIsolated, \
     Region, EventLog
 from ec2 import run_instances, add_instance_tags, add_volume_tags,\
     find_name_tag
+from openfalcon import openfalcon_login, openfalcon_logout, openfalcon_enable, \
+    openfalcon_disable
 
 
 ########################### PRE-DEFINED STEPS #################################
+def step_disable_alarm(ec2_resource, instance_id):
+    # read instance information:
+    ec2instance = EC2Instance.objects.get(instance_id=instance_id)
+    # log into openfalcon:
+    session = openfalcon_login(
+        settings.OPENFALCON['login_url'],
+        settings.OPENFALCON['username'],
+        settings.OPENFALCON['password'],
+        settings.OPENFALCON['cert_file'],
+        settings.OPENFALCON['cert_key']
+    )
+    # send request to disable alarm:
+    result = openfalcon_disable(
+        session, 
+        settings.OPENFALCON['switch_url'],
+        [ec2instance,]
+    )
+    # log out from openfalcon:
+    openfalcon_logout(session, settings.OPENFALCON['logout_url'])
+
+
+def step_enable_alarm():
+    # read instance information:
+    ec2instance = EC2Instance.objects.get(instance_id=instance_id)
+    # log into openfalcon:
+    session = openfalcon_login(
+        settings.OPENFALCON['login_url'],
+        settings.OPENFALCON['username'],
+        settings.OPENFALCON['password'],
+        settings.OPENFALCON['cert_file'],
+        settings.OPENFALCON['cert_key']
+    )
+    # send request to disable alarm:
+    result = openfalcon_enable(
+        session, 
+        settings.OPENFALCON['switch_url'],
+        [ec2instance,]
+    )
+    # log out from openfalcon:
+    openfalcon_logout(session, settings.OPENFALCON['logout_url'])
+
+
 def step_stop_instance(ec2_resource, instance_id):
     """Step to stop an EC2 instance"""
     instance = ec2_resource.Instance(instance_id)
