@@ -72,7 +72,7 @@ def step_disable_alarm(ec2_resource, instance_id):
     openfalcon_logout(session, settings.OPENFALCON['logout_url'])
 
 
-def step_enable_alarm():
+def step_enable_alarm(ec2_resource, instance_id):
     # read instance information:
     ec2instance = EC2Instance.objects.get(instance_id=instance_id)
     # log into openfalcon:
