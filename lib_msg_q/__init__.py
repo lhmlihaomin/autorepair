@@ -34,7 +34,7 @@ def setup_mq(channel, exchanges=[], queues=[], callbacks={}):
     for exchange in exchanges:
         channel.exchange_declare(
             exchange=exchange['name'],
-            type=exchange['type']
+            exchange_type=exchange['type']
         )
     # Declare & bind queues:
     for queue in queues:
