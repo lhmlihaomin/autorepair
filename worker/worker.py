@@ -212,6 +212,14 @@ def do_isolate(region, online_event):
         region_name=region.name
     )
     ec2_resource = session.resource('ec2')
+    # Disable alarm for this instance:
+    logger.info("Disabling alarm for instance %s"%(instance_id,))
+    event_log = EventLog.get_event_log(online_event, 'step_disable_alarm')
+    result = step_disable_alarm(ec2_resource, instance_id)
+    event_log.log_result(result)
+    logger.info(result)
+    if not result[0]:
+        return result
     # Isolate old instance:
     logger.info("Isolating instance %s"%(instance_id,))
     event_log = EventLog.get_event_log(online_event, 'step_isolate_instance')
@@ -231,6 +239,14 @@ def do_restart(region, online_event):
         region_name=region.name
     )
     ec2_resource = session.resource('ec2')
+    # Disable alarm for old instance:
+    logger.info("Disabling alarm for instance %s"%(instance_id,))
+    event_log = EventLog.get_event_log(online_event, 'step_disable_alarm')
+    result = step_disable_alarm(ec2_resource, instance_id)
+    event_log.log_result(result)
+    logger.info(result)
+    if not result[0]:
+        return result
     # stop instance:
     logger.info("Stopping instance %s"%(instance_id,))
     event_log = EventLog.get_event_log(online_event, 'step_stop_instance')

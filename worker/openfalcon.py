@@ -54,7 +54,6 @@ def openfalcon_login(login_url,
         'sig': ''
     }
     response = session.post(login_url, data_login)
-    print(response.text)
     body = json.loads(response.text)
     if body.has_key(u'data') and body.has_key(u'msg'):
         if body[u'data'] == u'' and body[u'msg'] == u'':
