@@ -239,7 +239,7 @@ def do_restart(region, online_event):
         region_name=region.name
     )
     ec2_resource = session.resource('ec2')
-    # Disable alarm for old instance:
+    # Disable alarm for this instance:
     logger.info("Disabling alarm for instance %s"%(instance_id,))
     event_log = EventLog.get_event_log(online_event, 'step_disable_alarm')
     result = step_disable_alarm(ec2_resource, instance_id)
@@ -259,6 +259,14 @@ def do_restart(region, online_event):
     logger.info("Starting instance %s"%(instance_id,))
     event_log = EventLog.get_event_log(online_event, 'step_start_instance')
     result = step_start_instance(ec2_resource, instance_id)
+    event_log.log_result(result)
+    logger.info(result)
+    if not result[0]:
+        return result
+    # Re-enable alarm for this instance:
+    logger.info("Re-enabling alarm for instance %s"%(instance_id,))
+    event_log = EventLog.get_event_log(online_event, 'step_enable_alarm')
+    result = step_enable_alarm(ec2_resource, instance_id)
     event_log.log_result(result)
     logger.info(result)
     return result
