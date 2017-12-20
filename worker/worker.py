@@ -55,42 +55,58 @@ def step_disable_alarm(ec2_resource, instance_id):
     # read instance information:
     ec2instance = EC2Instance.objects.get(instance_id=instance_id)
     # log into openfalcon:
-    session = openfalcon_login(
-        settings.OPENFALCON['login_url'],
-        settings.OPENFALCON['username'],
-        settings.OPENFALCON['password'],
-        settings.OPENFALCON['cert_file'],
-        settings.OPENFALCON['cert_key']
-    )
+    try:
+        session = openfalcon_login(
+            settings.OPENFALCON['login_url'],
+            settings.OPENFALCON['username'],
+            settings.OPENFALCON['password'],
+            settings.OPENFALCON['cert_file'],
+            settings.OPENFALCON['cert_key']
+        )
+    except Exception as ex:
+        return (False, "Failed to log into OpenFalcon.")
     # send request to disable alarm:
     result = openfalcon_disable(
         session, 
         settings.OPENFALCON['switch_url'],
         [ec2instance,]
     )
+    if result.status_code != 200:
+        return (False, "Failed to disable alarm.")
     # log out from openfalcon:
-    openfalcon_logout(session, settings.OPENFALCON['logout_url'])
+    result = openfalcon_logout(session, settings.OPENFALCON['logout_url'])
+    if result.status_code != 200:
+        return (False, "Failed to logout OpenFalcon.")
+    return (True, "Alarm disabled.")
 
 
 def step_enable_alarm(ec2_resource, instance_id):
     # read instance information:
     ec2instance = EC2Instance.objects.get(instance_id=instance_id)
     # log into openfalcon:
-    session = openfalcon_login(
-        settings.OPENFALCON['login_url'],
-        settings.OPENFALCON['username'],
-        settings.OPENFALCON['password'],
-        settings.OPENFALCON['cert_file'],
-        settings.OPENFALCON['cert_key']
-    )
+    try:
+        session = openfalcon_login(
+            settings.OPENFALCON['login_url'],
+            settings.OPENFALCON['username'],
+            settings.OPENFALCON['password'],
+            settings.OPENFALCON['cert_file'],
+            settings.OPENFALCON['cert_key']
+        )
+    except Exception as ex:
+        return (False, "Failed to log into OpenFalcon.")
     # send request to disable alarm:
     result = openfalcon_enable(
         session, 
         settings.OPENFALCON['switch_url'],
         [ec2instance,]
     )
+    if result.status_code != 200:
+        return (False, "Failed to enable alarm.")
     # log out from openfalcon:
-    openfalcon_logout(session, settings.OPENFALCON['logout_url'])
+    result = openfalcon_logout(session, settings.OPENFALCON['logout_url'])
+    if result.status_code != 200:
+        return (False, "Failed to logout OpenFalcon.")
+    return (True, "Alarm enabled.")
 
 
 def step_stop_instance(ec2_resource, instance_id):
@@ -296,6 +312,6 @@ def main():
 
 
 
-if __name__ == '__main__':
-    main()
+#if __name__ == '__main__':
+#    main()
 
