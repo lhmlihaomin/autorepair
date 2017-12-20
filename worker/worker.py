@@ -282,6 +282,14 @@ def do_replace(region, online_event):
         region_name=region.name
     )
     ec2_resource = session.resource('ec2')
+    # Disable alarm for old instance:
+    logger.info("Disabling alarm for instance %s"%(instance_id,))
+    event_log = EventLog.get_event_log(online_event, 'step_disable_alarm')
+    result = step_disable_alarm(ec2_resource, instance_id)
+    event_log.log_result(result)
+    logger.info(result)
+    if not result[0]:
+        return result
     # Start a new instance:
     logger.info("Starting new instance.")
     event_log = EventLog.get_event_log(online_event, 'step_run_instance')
