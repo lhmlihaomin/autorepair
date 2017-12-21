@@ -22,6 +22,8 @@ from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from asset.models import Region, EC2Instance, Module, OnlineEvent, EventLog,\
     EventHandleRule, AutoRepairSwitch
@@ -104,6 +106,8 @@ class OnlineEventCreation(generics.CreateAPIView):
     
 
 class OnlineEventCreationMixin(mixins.CreateModelMixin, generics.GenericAPIView):
+    authentication_classes = [TokenAuthentication,]
+    permission_classes = [IsAuthenticated,]
     queryset = OnlineEvent.objects.all()
     serializer_class = OnlineEventSerializer
 
