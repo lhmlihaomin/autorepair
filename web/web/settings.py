@@ -217,11 +217,11 @@ LOGGING = {
 PEM_DIR = "/home/ubuntu/pem"
 LOGIN_REDIRECT_URL = "/"
 OPENFALCON = {
-    "login_url": "aaa",
-    "logout_url": "bbb"
-    "switch_url": "ccc",
-    "username": "user",
-    "password": "pass",
-    "cert_file": "/path/to/cert/file",
-    "cert_key": "/path/to/cert/key",
+    "login_url": "http://localhost:8001/auth/login",
+    "logout_url": "http://localhost:8001/me/logout",
+    "switch_url": "http://localhost:8001/alarm/switch",
+    "username": "autorepair",
+    "password": "autorepair",
+    "cert_file": "/home/lhm/cert/falcon.crt.pem",
+    "cert_key": "/home/lhm/cert/falcon.key.pem",
 }
