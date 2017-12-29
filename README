@@ -1,7 +1,9 @@
 TODOs:
-0. Find a way to mark if a event has been processed or not;
-1. Implement shortcut methods in EventLog model;
-2. Add EventLog to all steps/actions;
-3. def do_isolate_instance;
-4. step to enable/disable alarms;
-5. Create a view to manage user tokens;
+0. Find a way to mark if a event has been processed or not; done
+1. Implement shortcut methods in EventLog model;    done
+2. Add EventLog to all steps/actions;   done
+3. def do_isolate_instance; done
+4. step to enable/disable alarms;   done
+5. Create a view to manage user tokens; done
+6. define public/private subnets in each VPC;
+7. generate JSON config dynamically using network config;

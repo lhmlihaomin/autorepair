@@ -12,6 +12,7 @@ def report_instance_down(url, token, region_name, instance_id, source='api'):
     Returns:
         resp: requests Response. Success if resp.status_code is 200.
     """
+    # Post data:
     data = {
         "source": source,
         "resource_type": "ec2",
@@ -20,6 +21,7 @@ def report_instance_down(url, token, region_name, instance_id, source='api'):
         "detail": "none",
         "region_name": region_name,
     }
+    # Set up API credentials:
     s = requests.Session()
     s.headers.update({
         "Authorization": "Token "+token
