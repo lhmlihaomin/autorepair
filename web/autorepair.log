@@ -1,0 +1,295 @@
+nohup: ignoring input
+[12/Mar/2018 16:54:10] "GET /admin/ HTTP/1.1" 302 0
+[12/Mar/2018 16:54:10] "GET /admin/login/?next=/admin/ HTTP/1.1" 200 1654
+[12/Mar/2018 16:54:11] "GET /static/admin/css/base.css HTTP/1.1" 200 16066
+[12/Mar/2018 16:54:11] "GET /static/admin/css/login.css HTTP/1.1" 200 1203
+[12/Mar/2018 16:54:11] "GET /static/admin/css/fonts.css HTTP/1.1" 200 423
+[12/Mar/2018 16:54:12] "GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 200 80304
+[12/Mar/2018 16:54:12] "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 200 81348
+Not Found: /favicon.ico
+[12/Mar/2018 16:54:13] "GET /favicon.ico HTTP/1.1" 404 3059
+Not Found: /favicon.ico
+[12/Mar/2018 16:54:13] "GET /favicon.ico HTTP/1.1" 404 3059
+[12/Mar/2018 17:34:30] "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/SocketServer.py", line 593, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 334, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 649, in __init__
+    self.handle()
+  File "/usr/local/lib/python2.7/dist-packages/django/core/servers/basehttp.py", line 140, in handle
+    self.raw_requestline = self.rfile.readline(65537)
+  File "/usr/lib/python2.7/socket.py", line 476, in readline
+    data = self._sock.recv(self._rbufsize)
+error: [Errno 104] Connection reset by peer
+[12/Mar/2018 17:34:31] "GET /admin/ HTTP/1.1" 200 4909
+[12/Mar/2018 17:34:31] "GET /static/admin/css/dashboard.css HTTP/1.1" 200 412
+[12/Mar/2018 17:34:32] "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+[12/Mar/2018 17:34:32] "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+[12/Mar/2018 17:34:32] "GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 200 82564
+[12/Mar/2018 17:50:58] "GET /admin/asset/module/ HTTP/1.1" 302 0
+[12/Mar/2018 17:50:59] "GET /admin/login/?next=/admin/asset/module/ HTTP/1.1" 200 1680
+[12/Mar/2018 17:51:02] "POST /admin/login/?next=/admin/asset/module/ HTTP/1.1" 302 0
+[12/Mar/2018 17:51:03] "GET /admin/asset/module/ HTTP/1.1" 200 3038
+[12/Mar/2018 17:51:03] "GET /static/admin/css/changelists.css HTTP/1.1" 200 6170
+[12/Mar/2018 17:51:03] "GET /admin/jsi18n/ HTTP/1.1" 200 3217
+[12/Mar/2018 17:51:03] "GET /static/admin/js/core.js HTTP/1.1" 200 7976
+[12/Mar/2018 17:51:03] "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 363
+[12/Mar/2018 17:51:03] "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 6591
+[12/Mar/2018 17:51:04] "GET /static/admin/js/actions.js HTTP/1.1" 200 6501
+[12/Mar/2018 17:51:04] "GET /static/admin/js/urlify.js HTTP/1.1" 200 8186
+[12/Mar/2018 17:51:04] "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1538
+[12/Mar/2018 17:51:04] "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 258648
+[12/Mar/2018 17:51:04] "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 128820
+[12/Mar/2018 17:51:06] "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+[12/Mar/2018 17:51:11] "GET /admin/asset/module/add/ HTTP/1.1" 302 0
+[12/Mar/2018 17:51:12] "GET /admin/login/?next=/admin/asset/module/add/ HTTP/1.1" 200 1688
+[12/Mar/2018 17:51:15] "POST /admin/login/?next=/admin/asset/module/add/ HTTP/1.1" 302 0
+[12/Mar/2018 17:51:16] "GET /admin/asset/module/add/ HTTP/1.1" 200 6309
+[12/Mar/2018 17:51:16] "GET /static/admin/css/forms.css HTTP/1.1" 200 8173
+[12/Mar/2018 17:51:16] "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 495
+[12/Mar/2018 17:51:16] "GET /admin/jsi18n/ HTTP/1.1" 200 3217
+[12/Mar/2018 17:51:16] "GET /static/admin/js/change_form.js HTTP/1.1" 200 712
+[12/Mar/2018 17:51:16] "GET /static/admin/css/widgets.css HTTP/1.1" 200 10340
+[12/Mar/2018 17:51:34] "GET /admin/ HTTP/1.1" 200 4909
+Performing system checks...
+
+System check identified no issues (0 silenced).
+March 12, 2018 - 16:53:53
+Django version 1.11, using settings 'web.settings'
+Starting development server at http://0.0.0.0:20000/
+Quit the server with CONTROL-C.
+----------------------------------------
+Exception happened during processing of request from ('103.73.97.150', 63860)
+----------------------------------------
+Performing system checks...
+
+System check identified no issues (0 silenced).
+March 12, 2018 - 17:53:09
+Django version 1.11, using settings 'web.settings'
+Starting development server at http://0.0.0.0:20000/
+Quit the server with CONTROL-C.
+[12/Mar/2018 17:55:34] "GET /admin/auth/ HTTP/1.1" 200 2707
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/SocketServer.py", line 593, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 334, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 649, in __init__
+    self.handle()
+  File "/usr/local/lib/python2.7/dist-packages/django/core/servers/basehttp.py", line 140, in handle
+    self.raw_requestline = self.rfile.readline(65537)
+  File "/usr/lib/python2.7/socket.py", line 476, in readline
+    data = self._sock.recv(self._rbufsize)
+error: [Errno 104] Connection reset by peer
+[12/Mar/2018 17:55:37] "GET /admin/ HTTP/1.1" 200 5304
+[12/Mar/2018 17:55:41] "GET /admin/asset/region/ HTTP/1.1" 200 3038
+[12/Mar/2018 17:55:41] "GET /admin/jsi18n/ HTTP/1.1" 200 3217
+[12/Mar/2018 17:55:43] "GET /admin/ HTTP/1.1" 200 5304
+[12/Mar/2018 17:55:44] "GET /admin/asset/region/add/ HTTP/1.1" 200 5296
+[12/Mar/2018 17:55:45] "GET /admin/jsi18n/ HTTP/1.1" 200 3217
+[12/Mar/2018 17:56:10] "POST /admin/asset/region/add/ HTTP/1.1" 302 0
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/SocketServer.py", line 593, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 334, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 649, in __init__
+    self.handle()
+  File "/usr/local/lib/python2.7/dist-packages/django/core/servers/basehttp.py", line 140, in handle
+    self.raw_requestline = self.rfile.readline(65537)
+  File "/usr/lib/python2.7/socket.py", line 476, in readline
+    data = self._sock.recv(self._rbufsize)
+error: [Errno 104] Connection reset by peer
+[12/Mar/2018 17:56:10] "GET /admin/asset/region/ HTTP/1.1" 200 4353
+[12/Mar/2018 17:56:11] "GET /admin/jsi18n/ HTTP/1.1" 200 3217
+[12/Mar/2018 17:56:11] "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+[12/Mar/2018 17:56:13] "GET /admin/ HTTP/1.1" 200 5591
+[12/Mar/2018 17:56:15] "GET /admin/asset/module/add/ HTTP/1.1" 200 6869
+[12/Mar/2018 17:56:15] "GET /admin/jsi18n/ HTTP/1.1" 200 3217
+[12/Mar/2018 17:56:26] "POST /admin/asset/module/add/ HTTP/1.1" 302 0
+[12/Mar/2018 17:56:27] "GET /admin/asset/module/ HTTP/1.1" 200 4365
+[12/Mar/2018 17:56:27] "GET /admin/jsi18n/ HTTP/1.1" 200 3217
+nohup: ignoring input
+[13/Mar/2018 16:40:06] "GET / HTTP/1.1" 302 0
+[13/Mar/2018 16:40:06] "GET /accounts/login/?next=/ HTTP/1.1" 200 2811
+[13/Mar/2018 16:40:07] "GET /static/asset/css/bootstrap.min.css HTTP/1.1" 404 1735
+[13/Mar/2018 16:40:07] "GET /static/asset/css/font-awesome.min.css HTTP/1.1" 404 1744
+[13/Mar/2018 16:40:07] "GET /static/asset/css/ace-skins.min.css HTTP/1.1" 404 1735
+[13/Mar/2018 16:40:07] "GET /static/asset/css/ace-rtl.min.css HTTP/1.1" 404 1729
+[13/Mar/2018 16:40:07] "GET /static/asset/css/ace.min.css HTTP/1.1" 404 1717
+Not Found: /favicon.ico
+[13/Mar/2018 16:40:07] "GET /favicon.ico HTTP/1.1" 404 3060
+Not Found: /favicon.ico
+[13/Mar/2018 16:40:07] "GET /favicon.ico HTTP/1.1" 404 3060
+[13/Mar/2018 16:40:14] "POST /accounts/login/?next=/ HTTP/1.1" 302 0
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/SocketServer.py", line 593, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 334, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 649, in __init__
+    self.handle()
+  File "/usr/local/lib/python2.7/dist-packages/django/core/servers/basehttp.py", line 140, in handle
+    self.raw_requestline = self.rfile.readline(65537)
+  File "/usr/lib/python2.7/socket.py", line 476, in readline
+    data = self._sock.recv(self._rbufsize)
+error: [Errno 104] Connection reset by peer
+[13/Mar/2018 16:40:16] "GET / HTTP/1.1" 200 6118
+[13/Mar/2018 16:40:17] "GET /static/css/metisMenu.min.css HTTP/1.1" 200 781
+[13/Mar/2018 16:40:17] "GET /static/css/sb-admin-2.min.css HTTP/1.1" 200 6777
+[13/Mar/2018 16:40:17] "GET /static/css/font-awesome.min.css HTTP/1.1" 200 29063
+[13/Mar/2018 16:40:17] "GET /static/js/metisMenu.min.js HTTP/1.1" 200 1879
+[13/Mar/2018 16:40:17] "GET /static/js/sb-admin-2.min.js HTTP/1.1" 200 845
+[13/Mar/2018 16:40:18] "GET /static/js/bootstrap.min.js HTTP/1.1" 200 37045
+[13/Mar/2018 16:40:18] "GET /static/css/bootstrap.min.css HTTP/1.1" 200 121155
+[13/Mar/2018 16:40:18] "GET /static/js/jquery.min.js HTTP/1.1" 200 86351
+[13/Mar/2018 16:40:19] "GET /static/fonts/fontawesome-webfont.woff2?v=4.6.3 HTTP/1.1" 200 71896
+[13/Mar/2018 16:40:21] "GET /hosts/ HTTP/1.1" 200 5650
+Not Found: /api/
+[13/Mar/2018 16:40:26] "GET /api/ HTTP/1.1" 404 4027
+[13/Mar/2018 16:41:46] "GET /api/create_event/ HTTP/1.1" 401 3740
+[13/Mar/2018 16:41:47] "GET /static/rest_framework/css/prettify.css HTTP/1.1" 200 817
+[13/Mar/2018 16:41:47] "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 200 3385
+[13/Mar/2018 16:41:47] "GET /static/rest_framework/css/default.css HTTP/1.1" 200 1131
+[13/Mar/2018 16:41:47] "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 200 3597
+[13/Mar/2018 16:41:47] "GET /static/rest_framework/js/csrf.js HTTP/1.1" 200 1735
+[13/Mar/2018 16:41:47] "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 200 13632
+[13/Mar/2018 16:41:47] "GET /static/rest_framework/js/default.js HTTP/1.1" 200 1262
+[13/Mar/2018 16:41:47] "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 200 37045
+[13/Mar/2018 16:41:47] "GET /static/rest_framework/js/jquery-1.12.4.min.js HTTP/1.1" 200 97163
+[13/Mar/2018 16:41:48] "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 200 121200
+[13/Mar/2018 16:41:48] "GET /static/rest_framework/img/grid.png HTTP/1.1" 200 1458
+[13/Mar/2018 17:01:49] "GET /api/pause_auto_repair/ HTTP/1.1" 405 5615
+[13/Mar/2018 17:01:59] "GET /api/create_event/ HTTP/1.1" 401 3740
+[13/Mar/2018 17:11:10] "POST /api/create_event/ HTTP/1.1" 401 27
+[13/Mar/2018 17:11:24] "POST /api/create_event/ HTTP/1.1" 401 27
+[13/Mar/2018 17:11:41] "GET /admin/ HTTP/1.1" 200 5884
+[13/Mar/2018 17:11:42] "GET /static/admin/css/base.css HTTP/1.1" 200 16066
+[13/Mar/2018 17:11:42] "GET /static/admin/css/dashboard.css HTTP/1.1" 200 412
+[13/Mar/2018 17:11:43] "GET /static/admin/css/fonts.css HTTP/1.1" 200 423
+[13/Mar/2018 17:11:43] "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+[13/Mar/2018 17:11:43] "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+[13/Mar/2018 17:11:43] "GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 200 80304
+[13/Mar/2018 17:11:44] "GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 200 82564
+[13/Mar/2018 17:11:44] "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 200 81348
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/SocketServer.py", line 593, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 334, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 649, in __init__
+    self.handle()
+  File "/usr/local/lib/python2.7/dist-packages/django/core/servers/basehttp.py", line 140, in handle
+    self.raw_requestline = self.rfile.readline(65537)
+  File "/usr/lib/python2.7/socket.py", line 476, in readline
+    data = self._sock.recv(self._rbufsize)
+error: [Errno 104] Connection reset by peer
+[13/Mar/2018 17:11:49] "GET /admin/authtoken/token/ HTTP/1.1" 200 3048
+[13/Mar/2018 17:11:50] "GET /static/admin/css/changelists.css HTTP/1.1" 200 6170
+[13/Mar/2018 17:11:50] "GET /admin/jsi18n/ HTTP/1.1" 200 3217
+[13/Mar/2018 17:11:50] "GET /static/admin/js/core.js HTTP/1.1" 200 7976
+[13/Mar/2018 17:11:50] "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 363
+[13/Mar/2018 17:11:50] "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 6591
+[13/Mar/2018 17:11:50] "GET /static/admin/js/actions.js HTTP/1.1" 200 6501
+[13/Mar/2018 17:11:50] "GET /static/admin/js/urlify.js HTTP/1.1" 200 8186
+[13/Mar/2018 17:11:50] "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1538
+[13/Mar/2018 17:11:51] "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 128820
+[13/Mar/2018 17:11:51] "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 258648
+[13/Mar/2018 17:11:52] "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+[13/Mar/2018 17:11:54] "GET /admin/authtoken/token/add/ HTTP/1.1" 200 4438
+[13/Mar/2018 17:11:55] "GET /static/admin/css/forms.css HTTP/1.1" 200 8173
+[13/Mar/2018 17:11:55] "GET /admin/jsi18n/ HTTP/1.1" 200 3217
+[13/Mar/2018 17:11:55] "GET /static/admin/js/change_form.js HTTP/1.1" 200 712
+[13/Mar/2018 17:11:55] "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 495
+[13/Mar/2018 17:11:55] "GET /static/admin/css/widgets.css HTTP/1.1" 200 10340
+[13/Mar/2018 17:12:01] "POST /admin/authtoken/token/add/ HTTP/1.1" 302 0
+[13/Mar/2018 17:12:01] "GET /admin/authtoken/token/ HTTP/1.1" 200 5201
+[13/Mar/2018 17:12:02] "GET /admin/jsi18n/ HTTP/1.1" 200 3217
+[13/Mar/2018 17:12:02] "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+[13/Mar/2018 17:12:02] "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+[13/Mar/2018 17:12:03] "GET /admin/authtoken/token/229ee70b0930983d36f4e00ce81a8fb97a530378/change/ HTTP/1.1" 200 4777
+[13/Mar/2018 17:12:04] "GET /admin/jsi18n/ HTTP/1.1" 200 3217
+[13/Mar/2018 17:12:06] "GET /admin/authtoken/token/ HTTP/1.1" 200 4947
+Internal Server Error: /api/create_event/
+Traceback (most recent call last):
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/rest_framework/views.py", line 494, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python2.7/dist-packages/rest_framework/views.py", line 454, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python2.7/dist-packages/rest_framework/views.py", line 491, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/autorepair/web/apiserver/views.py", line 118, in post
+    region = Region.objects.get(name=data.pop('region_name'))
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/django/db/models/query.py", line 379, in get
+    self.model._meta.object_name
+DoesNotExist: Region matching query does not exist.
+[13/Mar/2018 17:17:56] "POST /api/create_event/ HTTP/1.1" 500 17728
+[13/Mar/2018 17:20:30] "POST /api/create_event/ HTTP/1.1" 200 146
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/SocketServer.py", line 593, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 334, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 649, in __init__
+    self.handle()
+  File "/usr/local/lib/python2.7/dist-packages/django/core/servers/basehttp.py", line 140, in handle
+    self.raw_requestline = self.rfile.readline(65537)
+  File "/usr/lib/python2.7/socket.py", line 476, in readline
+    data = self._sock.recv(self._rbufsize)
+error: [Errno 104] Connection reset by peer
+[13/Mar/2018 17:25:44] "GET /admin/ HTTP/1.1" 200 6243
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/SocketServer.py", line 593, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 334, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python2.7/SocketServer.py", line 649, in __init__
+    self.handle()
+  File "/usr/local/lib/python2.7/dist-packages/django/core/servers/basehttp.py", line 140, in handle
+    self.raw_requestline = self.rfile.readline(65537)
+  File "/usr/lib/python2.7/socket.py", line 476, in readline
+    data = self._sock.recv(self._rbufsize)
+error: [Errno 104] Connection reset by peer
+[13/Mar/2018 17:29:36] "GET /api/create_event/ HTTP/1.1" 401 3740
+Performing system checks...
+
+System check identified no issues (0 silenced).
+March 13, 2018 - 16:27:01
+Django version 1.11, using settings 'web.settings'
+Starting development server at http://0.0.0.0:20000/
+Quit the server with CONTROL-C.
+----------------------------------------
+Exception happened during processing of request from ('113.116.60.147', 8921)
+----------------------------------------
+----------------------------------------
+Exception happened during processing of request from ('113.116.60.147', 1684)
+----------------------------------------
+----------------------------------------
+Exception happened during processing of request from ('113.116.60.147', 24792)
+----------------------------------------
+----------------------------------------
+Exception happened during processing of request from ('113.116.60.147', 13850)
+----------------------------------------
+[13/Mar/2018 17:57:51] "GET /admin/ HTTP/1.1" 200 6665
+[13/Mar/2018 17:57:54] "GET /admin/asset/ec2instance/ HTTP/1.1" 200 3083
+[13/Mar/2018 17:57:54] "GET /admin/jsi18n/ HTTP/1.1" 200 3217
+[13/Mar/2018 17:57:57] "GET /admin/asset/ec2instance/add/ HTTP/1.1" 200 10256
+[13/Mar/2018 17:57:57] "GET /admin/jsi18n/ HTTP/1.1" 200 3217
+[13/Mar/2018 17:57:57] "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 20529
+[13/Mar/2018 17:57:57] "GET /static/admin/js/calendar.js HTTP/1.1" 200 7790
+[13/Mar/2018 17:57:58] "GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+[13/Mar/2018 17:57:58] "GET /static/admin/img/icon-clock.svg HTTP/1.1" 200 677

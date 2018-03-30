@@ -1,0 +1,5 @@
+INFO 2018-03-15 16:17:08,032 judge 1827 140597113141056 Keyboard interrupt. Stopping.
+INFO 2018-03-16 17:51:41,891 judge 23968 140721359783744 RabbitMQ connection established.
+INFO 2018-03-16 17:51:41,891 judge 23968 140721359783744 Start consuming.
+INFO 2018-03-16 17:51:41,895 judge 23968 140721359783744 Starting worker for event 2
+INFO 2018-03-30 16:51:47,136 judge 23968 140721359783744 Keyboard interrupt. Stopping.

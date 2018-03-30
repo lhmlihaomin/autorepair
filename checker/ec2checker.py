@@ -279,11 +279,13 @@ class EC2Checker(object):
                     instance.load()
                     print(instance.vpc_id)
                     print(instance.key_pair)
-                    self.ec2instance.running_state = instance.state['Name']
+                    #self.ec2instance.running_state = instance.state['Name']
+                    self.ec2instance.active = True
                     print("!!! "+instance.id)
                 except:
                     print("!!! Cannot describe instance. Instance might have been terminated.")
-                    self.ec2instance.running_state = "Terminated"
+                    #self.ec2instance.running_state = "Terminated"
+                    self.ec2instance.active = False
                     self.ec2instance.save()
                     return {}
                 return results

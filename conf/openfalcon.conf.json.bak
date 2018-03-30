@@ -1,7 +1,7 @@
 {
-    "login_url": "http://localhost:20002/auth/login",
-    "switch_url": "http://localhost:20002/alarm/switch",
-    "logout_url": "http://localhost:20002/me/logout",
+    "login_url": "http://172.31.14.156:12345/auth/login",
+    "switch_url": "http://172.31.14.156:12345/alarm/switch",
+    "logout_url": "http://172.31.14.156:12345/me/logout",
     "client_cert": "/home/ubuntu/cert/falcon.crt.pem",
     "client_cert_key": "/home/ubuntu/cert/falcon.key.pem",
     "username": "autorepair",

@@ -1,0 +1,3 @@
+INFO 2018-03-30 16:00:20,844 worker 994 140202078639936 (True, 'New instance started.')
+INFO 2018-03-30 16:00:20,844 worker 994 140202078639936 Isolating instance i-0939eecfbe55ef289
+INFO 2018-03-30 16:00:21,166 worker 994 140202078639936 (True, 'Instance security group isolated.')

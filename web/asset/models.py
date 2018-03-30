@@ -75,22 +75,23 @@ class Module(models.Model):
 
     @property
     def environ(self):
-        if self.profile.name.endswith("alpha"):
+        if self.region.profile_name.endswith("alpha"):
             return "dev"
-        elif self.profile.name.endswith("beta"):
+        elif self.region.profile_name.endswith("beta"):
             return "uat"
-        elif self.profile.name.endswith("prd"):
+        elif self.region.profile_name.endswith("preprd"):
+            return "preprd"
+        elif self.region.profile_name.endswith("prd"):
             return "prd"
-        elif self.profile.name.endswith("fast"):
+        elif self.region.profile_name.endswith("fast"):
             return "fprd"
-        elif self.profile.name.endswith("mercury"):
+        elif self.region.profile_name.endswith("mercury"):
             return "mprd"
 
     @property
     def instance_name_prefix(self):
         return "-".join([
-        #self.environ,
-        'dev',
+        self.environ,
         self.name,
         self.version,
         self.region.tag_name
