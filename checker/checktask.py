@@ -19,6 +19,8 @@ django_path = os.path.sep.join([
     parent_path,
     'web'
 ])
+print parent_path
+print django_path
 sys.path.append(parent_path)
 sys.path.append(django_path)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'web.settings'
